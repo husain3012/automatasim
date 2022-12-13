@@ -67,7 +67,6 @@ const useDFA = (): DFAInterface => {
         [state]: {},
       },
     }));
-    console.log(dfa);
   };
   const addTransition = (from: string, to: string, input: string) => {
     if (input.length !== 1) {
@@ -85,7 +84,6 @@ const useDFA = (): DFAInterface => {
     }
     // if transition already exists, do not add it
     if (dfa.transitions[from][input] == to) {
-      console.log(dfa.transitions[from])
       console.log("Transition already present.");
       return;
     }
@@ -169,9 +167,7 @@ const useDFA = (): DFAInterface => {
     };
   };
   const print = (): [][] => {
-    console.log(dfa);
     let transitionTable = [];
-    console.log(Array(dfa.inputSymbols.values()));
     transitionTable.push(["States/Inputs", ...Array.from(dfa.inputSymbols)]);
     for (const key in dfa.transitions) {
       let stateTransition = [];
