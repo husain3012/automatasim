@@ -56,11 +56,11 @@ const ControlPanel = ({ dfa }: { dfa: DFAInterface }) => {
           }}
           type="text"
           placeholder="Input test string"
-          className="input input-bordered input-success"
+          className="input input-bordered input-success  w-1/2"
         />
          <button
             onClick={testStringHandler}
-            className={`btn ${
+            className={`btn ml-auto   ${
               testResult === true
                 ? "btn-success"
                 : testResult === false

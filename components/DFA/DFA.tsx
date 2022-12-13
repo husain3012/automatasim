@@ -7,8 +7,8 @@ const DFA = () => {
   const dfa = useDFA();
 
   return (
-    <div className="flex flex-row w-screen h-[80vh]">
-      <div className="h-full  w-3/5  p-2">
+    <div className="flex flex-col sm:flex-row  w-screen h-[80vh]">
+      <div className="h-full  w-full sm:w-3/5  p-2">
         <Canvas dfa={dfa} />
       </div>
       <div className="divider divider-horizontal"></div>
