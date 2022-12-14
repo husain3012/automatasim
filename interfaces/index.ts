@@ -1,3 +1,5 @@
+import { Dispatch } from "react";
+
 export interface DFAInterface {
   states: string[];
   initialState: string | null;
@@ -8,12 +10,16 @@ export interface DFAInterface {
       [input: string]: string; // next state;
     };
   };
-  addState: (state: string, isFinal?: boolean, isInitial?:boolean) => void;
+  addState: (state: string, isFinal?: boolean, isInitial?: boolean) => void;
   addTransition: (from: string, to: string, input: string) => void;
   removeState: (state: string) => void;
   removeTransition: (from: string, to: string, input: string) => void;
-  test: (input: string) => {
+  test: (
+    input: string,
+  ) => {
     accepted: boolean;
+    path: string[];
   };
+
   print: () => [][];
 }

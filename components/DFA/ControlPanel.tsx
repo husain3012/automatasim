@@ -1,9 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, useEffect, useState } from "react";
 import useDFA from "../../hooks/useDFA";
 import { DFAInterface } from "../../interfaces";
-const ControlPanel = ({ dfa }: { dfa: DFAInterface }) => {
+const ControlPanel = ({
+  dfa,
+  setActiveEdge,
+  activeEdge,
+}: {
+  dfa: DFAInterface;
+  setActiveEdge?: Dispatch<string>;
+  activeEdge?: string;
+}) => {
   const [input, setInput] = useState("");
   const [testResult, setTestResult] = useState(null);
+  const [simSpeed, setSimSpeed] = useState(300);
   const [addNewTransition, setAddNewTransition] = useState({
     source: "",
     target: "",
@@ -14,6 +23,7 @@ const ControlPanel = ({ dfa }: { dfa: DFAInterface }) => {
     isFinal: false,
     isInitial: false,
   });
+  const [processingString, setProcessingString] = useState("");
 
   const addStateSourceHandler = (e) => {
     setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
@@ -43,6 +53,23 @@ const ControlPanel = ({ dfa }: { dfa: DFAInterface }) => {
     setTestResult(accepted);
   };
 
+  const simulateGraphically = async () => {
+    const { accepted, path } = dfa.test(input);
+    let i = 0;
+    for (const edge of path) {
+      setActiveEdge(edge);
+      i++;
+      setProcessingString(input.slice(0, i));
+      await new Promise((resolve) => setTimeout(resolve, simSpeed));
+    }
+    if (accepted) {
+      setTestResult(true);
+    } else {
+      setTestResult(false);
+    }
+    setActiveEdge(null);
+  };
+
   const transitionTable = dfa.print();
 
   return (
@@ -51,38 +78,98 @@ const ControlPanel = ({ dfa }: { dfa: DFAInterface }) => {
         <input
           value={input}
           onChange={(e) => {
-            setTestResult(null);
+            if (testResult) setTestResult(null);
+            if (activeEdge) setActiveEdge(null);
             setInput(e.target.value);
           }}
           type="text"
           placeholder="Input test string"
           className="input input-bordered input-success  w-1/2"
         />
-         <button
-            onClick={testStringHandler}
-            className={`btn ml-auto   ${
-              testResult === true
-                ? "btn-success"
-                : testResult === false
-                ? "btn-error"
-                : "btn-primary"
-            } min-w-[8em]`}
-          >
-            {testResult === null && "Test"}
-            {testResult === true && "Accepted"}
-            {testResult === false && "Rejected"}
-          </button>
+        <button
+          onClick={testStringHandler}
+          className={`btn ml-auto   ${
+            testResult === true
+              ? "btn-success"
+              : testResult === false
+              ? "btn-error"
+              : "btn-primary"
+          } min-w-[8em]`}
+          disabled={
+            dfa.initialState === null ||
+            dfa.finalStates.length === 0 ||
+            !!activeEdge
+          }
+        >
+          {testResult === null && "Test"}
+          {testResult === true && "Accepted"}
+          {testResult === false && "Rejected"}
+        </button>
 
-          <button
-            onClick={() => {
-              setInput("");
-              setTestResult(null);
-            }}
-            className="btn btn-secondary"
-          >
-            Reset
-          </button>
+        <button
+          onClick={() => {
+            setInput("");
+            setTestResult(null);
+            setActiveEdge(null);
+            setProcessingString("");
+          }}
+          className="btn btn-secondary"
+        >
+          Reset
+        </button>
       </div>
+
+      <div className="flex-col my-2">
+        <button
+          disabled={
+            dfa.initialState === null ||
+            dfa.finalStates.length === 0 ||
+            !!activeEdge
+          }
+          onClick={() => {
+            simulateGraphically();
+          }}
+          className="btn  w-full"
+        >
+          Sim
+        </button>
+        <div className="badge badge-sm">Sim Speed: {simSpeed} ms</div>
+        <input
+          type="range"
+          min="0"
+          max="3000"
+          value={simSpeed}
+          onChange={(e) => setSimSpeed(parseInt(e.target.value))}
+          className="range range-xs"
+        />
+
+        {processingString.length > 0 && (
+          <div className="mockup-code my-2">
+            <pre data-prefix="$">
+              <code>{processingString}</code>
+            </pre>
+            {testResult != null &&
+              !activeEdge &&
+              (testResult === false ? (
+                <pre
+                  data-prefix="$"
+                  className="bg-warning text-warning-content"
+                >
+                  <code>
+                    {processingString.length === input.length
+                      ? "Not terminating on accepting state."
+                      : "Invalid input."}
+                  </code>
+                </pre>
+              ) : (
+                <pre data-prefix="$" className="text-success">
+                  <code>Accepted!</code>
+                </pre>
+              ))}
+          </div>
+        )}
+      </div>
+
       <div className="divider"></div>
       <div>
         <div className="flex-col mb-4">

@@ -144,7 +144,9 @@ const useDFA = (): DFAInterface => {
     input: string
   ): {
     accepted: boolean;
+    path: string[];
   } => {
+    let path = [];
     let current_state = dfa.initialState;
     let i = 0;
 
@@ -153,17 +155,22 @@ const useDFA = (): DFAInterface => {
       if (!dfa.transitions[current_state][ch]) {
         return {
           accepted: false,
+          path: path,
         };
       }
-      current_state = dfa.transitions[current_state][ch];
+      const nextState = dfa.transitions[current_state][ch];
+      path.push(current_state + ch + nextState);
+      current_state = nextState;
     }
     if (dfa.finalStates.includes(current_state)) {
       return {
         accepted: true,
+        path: path,
       };
     }
     return {
       accepted: false,
+      path: path,
     };
   };
   const print = (): [][] => {
