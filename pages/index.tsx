@@ -13,8 +13,22 @@ const IndexPage = () => (
           <h1 className="text-5xl font-bold">Simulator for automatons</h1>
           <p className="py-6">
             This web application is a simulator for automatons. You can build
-            and simulate Definite Finite Automata, Push Down Automata and Turing
-            Machines.
+            and simulate{" "}
+            <Link className="underline" href="/dfa">
+              Definite Finite Automata
+            </Link>
+            , &nbsp;
+            <span className="tooltip" data-tip="Coming Soon">
+              <Link className="underline" href="/">
+                Push Down Automates
+              </Link>
+            </span>
+            &nbsp; and &nbsp;
+            <span className="tooltip" data-tip="Coming Soon">
+              <Link className="underline" href="/">
+                Turing Machines.
+              </Link>
+            </span>
           </p>
           <Link href="/dfa" className="btn btn-primary">
             Build

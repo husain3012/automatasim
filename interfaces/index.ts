@@ -21,5 +21,6 @@ export interface DFAInterface {
     path: string[];
   };
 
-  print: () => [][];
+  print: () => string[][];
+  generateValidStrings: (length: number) => string[];
 }

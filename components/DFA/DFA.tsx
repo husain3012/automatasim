@@ -8,7 +8,7 @@ const DFA = () => {
   const [activeEdge, setActiveEdge] = useState(null);
 
   return (
-    <div className="flex flex-col sm:flex-row  ">
+    <div className="flex flex-col sm:flex-row  border-b-2 border-base-200 ">
       <div className="h-[30vh] sm:h-[90vh]   w-full sm:w-3/5  px-2">
         <Canvas dfa={dfa} activeEdge={activeEdge} />
       </div>

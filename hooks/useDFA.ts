@@ -39,12 +39,11 @@ const useDFA = (): DFAInterface => {
     if (dfa.states.includes(state)) {
       return;
     }
-    setDfa((prev) => ({
-      ...prev,
-      states: [...prev.states, state],
-    }));
+    const current_state = { ...dfa };
+    current_state.states.push(state);
     // if no initial state is set, set this state as initial
-    if (!dfa.initialState && isInitial) {
+    if (isInitial && !dfa.initialState) {
+      current_state.initialState = state;
       setDfa((prev) => ({
         ...prev,
         initialState: state,
@@ -52,21 +51,16 @@ const useDFA = (): DFAInterface => {
     }
     // if isFinal is true, add this state to final states
     if (isFinal) {
-      dfa.finalStates.push(state);
+      current_state.finalStates.push(state);
       setDfa((prev) => ({
         ...prev,
         finalStates: [...prev.finalStates, state],
       }));
     }
     // add empty transition object for this state
-    dfa.transitions[state] = {};
-    setDfa((prev) => ({
-      ...prev,
-      transitions: {
-        ...prev.transitions,
-        [state]: {},
-      },
-    }));
+    current_state.transitions[state] = {};
+
+    setDfa(current_state);
   };
   const addTransition = (from: string, to: string, input: string) => {
     if (input.length !== 1) {
@@ -105,22 +99,34 @@ const useDFA = (): DFAInterface => {
   const removeState = (state: string) => {
     // if state does not exist, do not remove it
     if (!dfa.states.includes(state)) {
+      console.log("State does not exist.");
       return;
     }
+
+    const currentState = { ...dfa };
+
     // remove state from states
-    dfa.states = dfa.states.filter((s) => s !== state);
+
+    currentState.states = currentState.states.filter((s) => s !== state);
     // remove state from final states
-    dfa.finalStates = dfa.finalStates.filter((s) => s !== state);
+    currentState.finalStates = currentState.finalStates.filter(
+      (s) => s !== state
+    );
+    if (currentState.initialState == state) {
+      currentState.initialState = null;
+    }
+
     // remove state from transitions
-    delete dfa.transitions[state];
+    delete currentState.transitions[state];
     // remove transitions to state
-    for (const from in dfa.transitions) {
-      for (const input in dfa.transitions[from]) {
-        if (dfa.transitions[from][input] === state) {
-          delete dfa.transitions[from][input];
+    for (const from in currentState.transitions) {
+      for (const input in currentState.transitions[from]) {
+        if (currentState.transitions[from][input] == state) {
+          delete currentState.transitions[from][input];
         }
       }
     }
+    setDfa(currentState);
     updateSetOfInputSymbols();
   };
   const removeTransition = (from: string, to: string, input: string) => {
@@ -186,8 +192,40 @@ const useDFA = (): DFAInterface => {
       }
       transitionTable.push(stateTransition);
     }
-    console.table(transitionTable);
     return transitionTable;
+  };
+
+  const generateValidStrings = (length: number): string[] => {
+    let validStrings = new Set<string>();
+    let currentString = "";
+    let current_state = dfa.initialState;
+    length = Math.min(length, 1000);
+    // use BFS to generate all valid strings
+    let queue = [];
+    queue.push({ state: current_state, string: currentString });
+
+    while (queue.length > 0) {
+      let { state, string } = queue.shift();
+      
+    
+        if (dfa.finalStates.includes(state)) {
+          validStrings.add(string);
+        }
+        if(validStrings.size===length){
+          break;
+        }
+      
+      for (const input of Array.from(dfa.inputSymbols)) {
+        if (dfa.transitions[state][input]) {
+          queue.push({
+            state: dfa.transitions[state][input],
+            string: string + input,
+          });
+        }
+      }
+    }
+
+    return Array.from(validStrings);
   };
 
   return {
@@ -198,6 +236,7 @@ const useDFA = (): DFAInterface => {
     removeTransition,
     test,
     print,
+    generateValidStrings,
   };
 };
 export default useDFA;
