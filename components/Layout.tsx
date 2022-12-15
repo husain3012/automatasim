@@ -38,10 +38,10 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
           <Link href="https://github.com/husain3012" target="_blank" rel="noreferrer">
             <AiFillGithub />
           </Link>
-          <Link href="https://www.instagram.com/_husain_3012/" target="_blank" rel="noreferrer">
+          <Link href="https://www.linkedin.com/in/husain3012/" target="_blank" rel="noreferrer">
             <AiFillLinkedin />
           </Link>
-          <Link href="https://www.linkedin.com/in/husain3012/" target="_blank" rel="noreferrer">
+          <Link href="https://www.instagram.com/_husain_3012/" target="_blank" rel="noreferrer">
             <AiFillInstagram />
           </Link>
         </div>

@@ -9,7 +9,7 @@ const IndexPage = () => (
           src="/images/automatasim.png"
           className="max-w-sm w-60 md:w-auto rounded-lg shadow-2xl"
         />
-        <div>
+        <div >
           <h1 className="text-5xl font-bold">Simulator for automatons</h1>
           <p className="py-6">
             This web application is a simulator for automatons. You can build
@@ -63,12 +63,11 @@ const IndexPage = () => (
         </div>
       </div>
     </div>
-    <div id="how_to_use" className="artboard artboard-horizontal phone-3 flex justify-center items-center m-auto">
-      <h1 className="text-5xl font-bold">How to use?</h1>
+    <div id="how_to_use" className="artboard sm:artboard-horizontal p-2 phone-3 flex flex-col sm:flex-row justify-center items-center m-auto">
+      <h1 className="text-5xl font-bold text-center sm:text-left m-4">How to use?</h1>
 
       <iframe
-        width="720"
-        height="380"
+        className="w-4/5 sm:w-3/5 sm:h-3/5"
         src="https://www.youtube.com/embed/O04a2a7dwb4"
         title="DFA tutorial for AutomataSim"
         allowFullScreen={true}
