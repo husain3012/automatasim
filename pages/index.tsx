@@ -30,11 +30,50 @@ const IndexPage = () => (
               </Link>
             </span>
           </p>
-          <Link href="/dfa" className="btn btn-primary">
-            Build
-          </Link>
+          <div className="flex gap-2">
+            <Link href="/dfa" className="btn btn-primary">
+              Build
+            </Link>
+            <Link
+              href="/#how_to_use"
+              className="btn gap-2"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                strokeWidth={1.5}
+                stroke="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  d="M15.91 11.672a.375.375 0 010 .656l-5.603 3.113a.375.375 0 01-.557-.328V8.887c0-.286.307-.466.557-.327l5.603 3.112z"
+                />
+              </svg>
+              Watch Tutorial
+            </Link>
+          </div>
         </div>
       </div>
+    </div>
+    <div id="how_to_use" className="artboard artboard-horizontal phone-3 flex justify-center items-center m-auto">
+      <h1 className="text-5xl font-bold">How to use?</h1>
+
+      <iframe
+        width="720"
+        height="380"
+        src="https://www.youtube.com/embed/O04a2a7dwb4"
+        title="DFA tutorial for AutomataSim"
+        allowFullScreen={true}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      ></iframe>
     </div>
   </Layout>
 );
