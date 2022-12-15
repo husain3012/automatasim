@@ -173,7 +173,7 @@ const ControlPanel = ({
                     </pre>
                   ) : (
                     <pre data-prefix="$" className="text-success">
-                      <code>Accepted!</code>
+                      <code>Accepted🎉!</code>
                     </pre>
                   ))}
               </div>
@@ -181,8 +181,12 @@ const ControlPanel = ({
 
             {dfa.states.length > 0 && (
               <button
+              disabled={
+                dfa.initialState === null ||
+                dfa.finalStates.length === 0 
+              }
                 onClick={() => {
-                  const strings = dfa.generateValidStrings(100);
+                  const strings = dfa.generateValidStrings(1000);
                   setExampleInputs((prev) => ({
                     data: strings,
                     found: strings.length > 0,
@@ -203,7 +207,7 @@ const ControlPanel = ({
                       data-prefix="$"
                       className="bg-error text-error-content"
                     >
-                      <code>It's too hard for me!</code>
+                      <code>Couldn't find anything 😓</code>
                     </pre>
                   )}
                   {exampleInputs.found && (

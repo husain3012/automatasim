@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import ReactFlow, {
   Background,
   MarkerType,
   useNodesState,
   useEdgesState,
   Position,
+  addEdge,
 } from "reactflow";
 import "reactflow/dist/style.css";
 import { DFAInterface } from "../../interfaces";
@@ -24,7 +25,12 @@ const Canvas = ({
 }) => {
   const [nodes, setNodes, onNodesChange] = useNodesState([]);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
-
+  const [modal, setModal] = useState({
+    to: null,
+    from: null,
+    show: false,
+    input: "",
+  });
 
   useEffect(() => {
     const nodes_ = dfa.states.map((s, idx) => ({
@@ -51,8 +57,6 @@ const Canvas = ({
     }));
     const edges_ = [];
 
-
-
     for (const key in dfa.transitions) {
       for (const input in dfa.transitions[key]) {
         const nextState = dfa.transitions[key][input];
@@ -73,7 +77,8 @@ const Canvas = ({
 
             style: {
               strokeWidth: 2,
-              stroke: ( activeEdge === key + input + nextState)?"#00FF7F":"#FF0072",
+              stroke:
+                activeEdge === key + input + nextState ? "#00FF7F" : "#FF0072",
             },
             labelBgPadding: [8, 4],
             labelBgBorderRadius: 4,
@@ -104,6 +109,42 @@ const Canvas = ({
     setEdges(mergedEdges);
   }, [dfa]);
 
+  const onConnect = useCallback((params) => {
+    setModal({
+      to: params.target,
+      from: params.source,
+      show: true,
+      input: "",
+    });
+  }, []);
+
+  const addTransitionHandler = () => {
+    if (modal.input === "") {
+      setModal({
+        to: null,
+        from: null,
+        show: false,
+        input: "",
+      });
+      return;
+    }
+    console.log(modal.input.split(","));
+    const uniqueInputs = new Set<string>();
+    modal.input.split(",").forEach((inp) => uniqueInputs.add(inp));
+    
+    console.log(uniqueInputs);
+    for (const inp of Array.from(uniqueInputs)) {
+      dfa.addTransition(modal.from, modal.to, inp);
+    }
+
+    setModal({
+      to: null,
+      from: null,
+      show: false,
+      input: "",
+    });
+  };
+
   return (
     <>
       <ReactFlow
@@ -113,9 +154,54 @@ const Canvas = ({
         edges={edges}
         edgeTypes={edgeTypes}
         connectOnClick={false}
+        onConnect={onConnect}
       >
         <Background />
       </ReactFlow>
+      {modal.show && (
+        <div className="modal modal-open">
+          <div className="modal-box">
+            <h3 className="font-bold text-lg">Enter input</h3>
+            <p className="py-4">
+              <input
+                type="text"
+                className="input input-bordered"
+                placeholder="a,b,c"
+                value={modal.input}
+                minLength={1}
+                onChange={(e) => setModal({ ...modal, input: e.target.value })}
+              />
+              <br />
+              <br />
+              Enter input separated by commas, for the transition from{" "}
+              <span className="font-bold">{modal.from}</span> to{" "}
+              <span className="font-bold">{modal.to}</span>
+            </p>
+            <div className="flex justify-end gap-2">
+              <button
+                disabled={modal.input.length === 0}
+                onClick={addTransitionHandler}
+                className="btn btn-active"
+              >
+                Add
+              </button>
+              <button
+                onClick={() =>
+                  setModal({
+                    to: null,
+                    from: null,
+                    show: false,
+                    input: "",
+                  })
+                }
+                className="btn btn-ghost"
+              >
+                Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </>
   );
 };
