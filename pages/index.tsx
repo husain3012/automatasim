@@ -63,11 +63,12 @@ const IndexPage = () => (
         </div>
       </div>
     </div>
-    <div id="how_to_use" className="artboard sm:artboard-horizontal p-2 phone-3 flex flex-col sm:flex-row justify-center items-center m-auto">
-      <h1 className="text-5xl font-bold text-center sm:text-left m-4">How to use?</h1>
+    <div id="how_to_use" className="p-4 sm:p-16 phone-1 flex flex-col sm:flex-row justify-center items-center w-3/4 m-auto">
+      <h1 className="text-5xl font-bold text-center sm:text-left m-4 ">How to use?</h1>
 
       <iframe
-        className="w-4/5 sm:w-3/5 sm:h-3/5"
+        className="w-4/5 sm:w-full sm:h-96 m-4"
+       
         src="https://www.youtube.com/embed/O04a2a7dwb4"
         title="DFA tutorial for AutomataSim"
         allowFullScreen={true}
