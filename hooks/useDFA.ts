@@ -165,7 +165,7 @@ const useDFA = (): DFAInterface => {
         };
       }
       const nextState = dfa.transitions[current_state][ch];
-      path.push(current_state + ch + nextState);
+      path.push(current_state + "@" + ch + ">" + nextState);
       current_state = nextState;
     }
     if (dfa.finalStates.includes(current_state)) {

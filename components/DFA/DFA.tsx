@@ -15,7 +15,7 @@ const DFA = () => {
         <Canvas dfa={dfa} activeEdge={activeEdge} />
       </div>
       <div className="divider sm:divider-horizontal"></div>
-      <div className="mx-auto flex-col content-center sm:h-[90vh] m-2 p-2  sm:overflow-y-scroll scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200  ">
+      <div className={`mx-auto flex-col content-center sm:h-[90vh] m-2 p-2  sm:overflow-y-scroll scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200  ${!panelCollapsed && "min-w-[20vw]"}`}>
         <div className="flex flex-row justify-between items-center my-2">
           {!panelCollapsed && <h1 className="text-2xl font-bold">DFA</h1>}
           <button
@@ -29,6 +29,8 @@ const DFA = () => {
             )}
           </button>
         </div>
+
+        
 
         {!panelCollapsed && (
           <ControlPanel

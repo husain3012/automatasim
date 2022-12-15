@@ -85,11 +85,10 @@ const ControlPanel = ({
   const transitionTable = dfa.print();
 
   return (
-    <div className="flex flex-col">
-    
+    <div className="">
       {dfa.states.length > 0 && (
         <>
-          <div className="flex gap-1  ">
+          <div className="flex gap-1">
             <input
               value={input}
               onChange={(e) => {
@@ -261,59 +260,58 @@ const ControlPanel = ({
 
       <div className="divider"></div>
 
-      <div>
-        <div className="flex-col mb-4">
-          <div className="flex justify-between mt-2">
-            <div className="flex flex-col">
+      <>
+        <>
+          <div className=" flex flex-col">
+            <div className="flex gap-2">
               <input
                 type="text"
                 placeholder="State"
-                className="input input-bordered input-accent"
+                className="input input-bordered w-20 input-accent"
                 value={newState.name}
                 onChange={(e) =>
                   setNewState((prev) => ({ ...prev, name: e.target.value }))
                 }
               />{" "}
-              <div className="flex flex-row justify-evenly">
-                <label className="label cursor-pointer">
-                  <span className="label-text mr-2">Initial</span>
-                  <input
-                    type="checkbox"
-                    checked={newState.isInitial}
-                    disabled={dfa.initialState !== null}
-                    className="checkbox checkbox-primary checkbox-xs"
-                    onChange={(e) =>
-                      setNewState((prev) => ({
-                        ...prev,
-                        isInitial: e.target.checked,
-                      }))
-                    }
-                  />
-                </label>
-                <label className="label cursor-pointer">
-                  <span className="label-text mr-2">Final</span>
-                  <input
-                    type="checkbox"
-                    checked={newState.isFinal}
-                    className="checkbox checkbox-primary checkbox-xs"
-                    onChange={(e) =>
-                      setNewState((prev) => ({
-                        ...prev,
-                        isFinal: e.target.checked,
-                      }))
-                    }
-                  />
-                </label>
-              </div>
+              <button
+                onClick={addNewStateHandler}
+                className="btn btn-success"
+                disabled={newState.name.length === 0}
+              >
+                Add New State
+              </button>
             </div>
-
-            <button
-              onClick={addNewStateHandler}
-              className="btn btn-success"
-              disabled={newState.name.length === 0}
-            >
-              Add New State
-            </button>
+            <div className="flex flex-row gap-2">
+              <label className="label cursor-pointer">
+                <span className="label-text mr-2">Initial</span>
+                <input
+                  type="checkbox"
+                  checked={newState.isInitial}
+                  disabled={dfa.initialState !== null}
+                  className="checkbox checkbox-primary checkbox-xs"
+                  onChange={(e) =>
+                    setNewState((prev) => ({
+                      ...prev,
+                      isInitial: e.target.checked,
+                    }))
+                  }
+                />
+              </label>
+              <label className="label cursor-pointer">
+                <span className="label-text mr-2">Final</span>
+                <input
+                  type="checkbox"
+                  checked={newState.isFinal}
+                  className="checkbox checkbox-primary checkbox-xs"
+                  onChange={(e) =>
+                    setNewState((prev) => ({
+                      ...prev,
+                      isFinal: e.target.checked,
+                    }))
+                  }
+                />
+              </label>
+            </div>
           </div>
           <div className="divider"></div>
 
@@ -375,7 +373,7 @@ const ControlPanel = ({
               </button>
             </>
           )}
-        </div>
+        </>
         <div className="divider"></div>
 
         <div className="max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
@@ -445,7 +443,7 @@ const ControlPanel = ({
             </table>
           )}
         </div>
-      </div>
+      </>
     </div>
   );
 };

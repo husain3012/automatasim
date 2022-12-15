@@ -51,6 +51,8 @@ const Canvas = ({
         borderRadius: "100%",
         width: 50,
         height: 50,
+        // add a shadow to the node if it is the active node
+        boxShadow: activeEdge?.includes(">" + s) ? "0 0 15px #00FF7F" : "none",
       },
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
@@ -61,6 +63,7 @@ const Canvas = ({
       for (const input in dfa.transitions[key]) {
         const nextState = dfa.transitions[key][input];
         if (nextState) {
+          const currentEdge = key + "@" + input + ">" + nextState;
           edges_.push({
             id: key + input + nextState,
             source: key,
@@ -73,17 +76,16 @@ const Canvas = ({
             },
             type: "smart",
             data: { text: input },
-            animated: activeEdge === key + input + nextState,
+            animated: activeEdge === currentEdge,
 
             style: {
               strokeWidth: 2,
-              stroke:
-                activeEdge === key + input + nextState ? "#00FF7F" : "#FF0072",
+              stroke: activeEdge === currentEdge ? "#00FF7F" : "#FF0072",
             },
             labelBgPadding: [8, 4],
             labelBgBorderRadius: 4,
             labelBgStyle: {
-              fill: "#FFCC00",
+              fill: activeEdge === currentEdge ? "#00FF7F" : "#FFCC00",
               color: "#fff",
               fillOpacity: 0.7,
             },
@@ -131,7 +133,7 @@ const Canvas = ({
     console.log(modal.input.split(","));
     const uniqueInputs = new Set<string>();
     modal.input.split(",").forEach((inp) => uniqueInputs.add(inp));
-    
+
     console.log(uniqueInputs);
     for (const inp of Array.from(uniqueInputs)) {
       dfa.addTransition(modal.from, modal.to, inp);
