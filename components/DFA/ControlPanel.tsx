@@ -1,4 +1,5 @@
 import React, { Dispatch, useEffect, useState } from "react";
+import { AiFillRightCircle } from "react-icons/ai";
 import useDFA from "../../hooks/useDFA";
 import { DFAInterface } from "../../interfaces";
 const ControlPanel = ({
@@ -13,10 +14,13 @@ const ControlPanel = ({
   const [input, setInput] = useState("");
   const [testResult, setTestResult] = useState(null);
   const [simSpeed, setSimSpeed] = useState(300);
+  const [maxItr, setMaxItr] = useState(1000);
+
   const [exampleInputs, setExampleInputs] = useState({
     data: [],
     found: false,
     visible: false,
+    loading: false,
   });
   const [addNewTransition, setAddNewTransition] = useState({
     source: "",
@@ -81,7 +85,8 @@ const ControlPanel = ({
   const transitionTable = dfa.print();
 
   return (
-    <div>
+    <div className="flex flex-col">
+    
       {dfa.states.length > 0 && (
         <>
           <div className="flex gap-1  ">
@@ -130,6 +135,15 @@ const ControlPanel = ({
           </div>
 
           <div className="flex-col my-2">
+            <div className="badge badge-sm">Sim Speed: {simSpeed} ms</div>
+            <input
+              type="range"
+              min="0"
+              max="3000"
+              value={simSpeed}
+              onChange={(e) => setSimSpeed(parseInt(e.target.value))}
+              className="range range-xs"
+            />
             <button
               disabled={
                 dfa.initialState === null ||
@@ -143,15 +157,6 @@ const ControlPanel = ({
             >
               Sim
             </button>
-            <div className="badge badge-sm">Sim Speed: {simSpeed} ms</div>
-            <input
-              type="range"
-              min="0"
-              max="3000"
-              value={simSpeed}
-              onChange={(e) => setSimSpeed(parseInt(e.target.value))}
-              className="range range-xs"
-            />
 
             {processingString.length > 0 && (
               <div className="mockup-code my-2 max-w-md scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
@@ -180,23 +185,48 @@ const ControlPanel = ({
             )}
 
             {dfa.states.length > 0 && (
-              <button
-              disabled={
-                dfa.initialState === null ||
-                dfa.finalStates.length === 0 
-              }
-                onClick={() => {
-                  const strings = dfa.generateValidStrings(1000);
-                  setExampleInputs((prev) => ({
-                    data: strings,
-                    found: strings.length > 0,
-                    visible: true,
-                  }));
-                }}
-                className="btn  w-full"
-              >
-                Try finding valid strings
-              </button>
+              <>
+                <div
+                  className={`badge badge-sm   ${
+                    maxItr > 20000 && "badge-error"
+                  } `}
+                >
+                  Max Iterations: {maxItr} {maxItr > 20000}
+                </div>
+
+                <input
+                  type="range"
+                  min="1000"
+                  max="100000"
+                  value={maxItr}
+                  onChange={(e) => setMaxItr(parseInt(e.target.value))}
+                  className="range range-xs"
+                />
+                <button
+                  disabled={
+                    dfa.initialState === null || dfa.finalStates.length === 0
+                  }
+                  onClick={async () => {
+                    setExampleInputs((prev) => ({ ...prev, loading: true }));
+                    const strings = await dfa.generateValidStrings(
+                      100000,
+                      maxItr
+                    );
+                    setExampleInputs((prev) => ({
+                      data: strings,
+                      found: strings.length > 0,
+                      visible: true,
+                      loading: false,
+                    }));
+                  }}
+                  className={`btn  w-full ${
+                    exampleInputs.loading && "loading"
+                  } `}
+                >
+                  Try finding valid strings &nbsp;
+                  {maxItr > 20000 && "(Page may freeze)"}
+                </button>
+              </>
             )}
             {exampleInputs.visible && (
               <div className="max-h-[200px]  my-2 overflow-y-auto overflow-x-auto max-w-md scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
@@ -348,9 +378,9 @@ const ControlPanel = ({
         </div>
         <div className="divider"></div>
 
-        <div className="overflow-x-auto">
+        <div className="max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
           {dfa.states.length > 0 && (
-            <table className="table w-full">
+            <table className="table ">
               <thead>
                 <tr>
                   <th>States</th>

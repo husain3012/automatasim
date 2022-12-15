@@ -22,5 +22,5 @@ export interface DFAInterface {
   };
 
   print: () => string[][];
-  generateValidStrings: (length: number) => string[];
+  generateValidStrings: (length: number, maxItr?:number) => Promise<string[]>;
 }

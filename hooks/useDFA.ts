@@ -195,37 +195,45 @@ const useDFA = (): DFAInterface => {
     return transitionTable;
   };
 
-  const generateValidStrings = (length: number): string[] => {
+  const generateValidStrings = async (
+    length: number,
+    maxItr: 1000
+  ): Promise<string[]> => {
     let validStrings = new Set<string>();
     let currentString = "";
     let current_state = dfa.initialState;
     length = Math.min(length, 1000);
-    // use BFS to generate all valid strings
+
     let queue = [];
     queue.push({ state: current_state, string: currentString });
+    let iterations = 0;
 
-    while (queue.length > 0) {
-      let { state, string } = queue.shift();
-      
-    
+    return await new Promise((resolve) => {
+      while (queue.length > 0) {
+        iterations++;
+        if (iterations > maxItr) {
+          break;
+        }
+        let { state, string } = queue.shift();
+
         if (dfa.finalStates.includes(state)) {
           validStrings.add(string);
         }
-        if(validStrings.size===length){
+        if (validStrings.size === length) {
           break;
         }
-      
-      for (const input of Array.from(dfa.inputSymbols)) {
-        if (dfa.transitions[state][input]) {
-          queue.push({
-            state: dfa.transitions[state][input],
-            string: string + input,
-          });
+
+        for (const input of Array.from(dfa.inputSymbols)) {
+          if (dfa.transitions[state][input]) {
+            queue.push({
+              state: dfa.transitions[state][input],
+              string: string + input,
+            });
+          }
         }
       }
-    }
-
-    return Array.from(validStrings);
+      resolve(Array.from(validStrings));
+    });
   };
 
   return {
