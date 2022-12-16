@@ -1,5 +1,5 @@
-import Link from "next/link";
-import React from "react";
+import Link from 'next/link'
+import React from 'react'
 
 const Navbar = () => {
   return (
@@ -22,7 +22,7 @@ const Navbar = () => {
         </ul>
       </div>
     </nav>
-  );
-};
+  )
+}
 
-export default Navbar;
+export default Navbar

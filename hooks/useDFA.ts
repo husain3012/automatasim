@@ -1,16 +1,12 @@
 import { useState } from "react";
-import { DFAInterface } from "../interfaces";
+import { DFAInterface } from "../interfaces/dfa";
 
 const initialState: {
   states: string[];
   initialState: string | null;
   finalStates: string[];
   inputSymbols: Set<string>;
-  transitions: {
-    [state: string]: {
-      [input: string]: string; // next state;
-    };
-  };
+  transitions: Record<string, Record<string, string>>;
 } = {
   states: [],
   initialState: null,
@@ -152,16 +148,16 @@ const useDFA = (): DFAInterface => {
     accepted: boolean;
     path: string[];
   } => {
-    let path = [];
+    const path = [];
     let current_state = dfa.initialState;
     let i = 0;
 
     for (; i < input.length; i++) {
-      let ch = input[i];
+      const ch = input[i];
       if (!dfa.transitions[current_state][ch]) {
         return {
           accepted: false,
-          path: path,
+          path,
         };
       }
       const nextState = dfa.transitions[current_state][ch];
@@ -171,16 +167,16 @@ const useDFA = (): DFAInterface => {
     if (dfa.finalStates.includes(current_state)) {
       return {
         accepted: true,
-        path: path,
+        path,
       };
     }
     return {
       accepted: false,
-      path: path,
+      path,
     };
   };
-  const print = (): [][] => {
-    let transitionTable = [];
+  const print = (): Array<[]> => {
+    const transitionTable = [];
     transitionTable.push(["States/Inputs", ...Array.from(dfa.inputSymbols)]);
     for (const key in dfa.transitions) {
       let stateTransition = [];
@@ -199,22 +195,23 @@ const useDFA = (): DFAInterface => {
     length: number,
     maxItr: 1000
   ): Promise<string[]> => {
-    let validStrings = new Set<string>();
-    let currentString = "";
-    let current_state = dfa.initialState;
+    const validStrings = new Set<string>();
+    const currentString = "";
+    const current_state = dfa.initialState;
     length = Math.min(length, 1000);
 
-    let queue = [];
+    const queue = [];
     queue.push({ state: current_state, string: currentString });
-    let iterations = 0;
 
     return await new Promise((resolve) => {
+      let iterations = 0;
+
       while (queue.length > 0) {
         iterations++;
         if (iterations > maxItr) {
           break;
         }
-        let { state, string } = queue.shift();
+        const { state, string } = queue.shift();
 
         if (dfa.finalStates.includes(state)) {
           validStrings.add(string);

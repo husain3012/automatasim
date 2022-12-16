@@ -1,7 +1,7 @@
-import React from "react";
-import { getBezierPath, ConnectionLineType, Position } from "reactflow";
+import React from 'react'
+import { getBezierPath, Position } from 'reactflow'
 
-export default function CustomEdge({
+export default function CustomEdge ({
   id,
   sourceX,
   sourceY,
@@ -11,30 +11,30 @@ export default function CustomEdge({
   targetPosition,
   style = {},
   data,
-  markerEnd,
+  markerEnd
 }: {
-  id: string;
-  sourceX: number;
-  sourceY: number;
-  targetX: number;
-  targetY: number;
-  sourcePosition?: Position;
-  targetPosition?: Position;
-  style?: React.CSSProperties;
-  data?: any;
-  markerEnd?: string;
-}) {
+  id: string
+  sourceX: number
+  sourceY: number
+  targetX: number
+  targetY: number
+  sourcePosition?: Position
+  targetPosition?: Position
+  style?: React.CSSProperties
+  data?: any
+  markerEnd?: string
+}): React.ReactNode {
   const [edgePath] = getBezierPath({
     sourceX,
     sourceY,
     sourcePosition,
     targetX,
     targetY,
-    targetPosition,
-  });
+    targetPosition
+  })
 
   return (
-    <>
+    <React.Fragment>
       <path
         id={id}
         style={style}
@@ -45,14 +45,14 @@ export default function CustomEdge({
       <text>
         <textPath
           href={`#${id}`}
-          style={{ fontSize: "18px" }}
+          style={{ fontSize: '18px' }}
           startOffset="30%"
           textAnchor="middle"
-          
+
         >
           {data.text}
         </textPath>
       </text>
-    </>
-  );
+    </React.Fragment>
+  )
 }

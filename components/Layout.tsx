@@ -1,15 +1,15 @@
-import React, { ReactNode } from "react";
-import Link from "next/link";
-import Head from "next/head";
-import Navbar from "./Layout/Navbar";
-import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from "react-icons/ai";
-type Props = {
-  children?: ReactNode;
-  title?: string;
-};
+import React, { ReactNode } from 'react'
+import Link from 'next/link'
+import Head from 'next/head'
+import Navbar from './Layout/Navbar'
+import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from 'react-icons/ai'
+interface Props {
+  children?: ReactNode
+  title?: string
+}
 
-const Layout = ({ children, title = "This is the default title" }: Props) => (
-  <>
+const Layout = ({ children, title = 'Automata' }: Props) => (
+  <React.Fragment>
     <div className="">
       <Head>
         <title>{title}</title>
@@ -50,7 +50,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
         <p>Husain 🌼</p>
       </div>
     </footer>
-  </>
-);
+  </React.Fragment>
+)
 
-export default Layout;
+export default Layout
