@@ -5,7 +5,6 @@ import ReactFlow, {
   useNodesState,
   useEdgesState,
   Position,
-  addEdge
 } from 'reactflow'
 import 'reactflow/dist/style.css'
 import { DFAInterface } from '../../interfaces/dfa'

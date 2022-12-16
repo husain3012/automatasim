@@ -1,4 +1,3 @@
-import { Dispatch } from 'react'
 
 export interface DFAInterface {
   states: string[]

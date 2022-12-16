@@ -28,8 +28,8 @@ const useDFA = (): DFAInterface => {
 
   const addState = (
     state: string,
-    isFinal: boolean = false,
-    isInitial: boolean = false
+    isFinal = false,
+    isInitial = false
   ) => {
     // if state already exists, do not add it
     if (dfa.states.includes(state)) {

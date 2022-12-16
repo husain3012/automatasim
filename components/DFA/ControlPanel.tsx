@@ -1,88 +1,86 @@
-import React, { Dispatch, useEffect, useState } from 'react'
-import { AiFillRightCircle } from 'react-icons/ai'
-import useDFA from '../../hooks/useDFA'
-import { DFAInterface } from '../../interfaces/dfa'
+import React, { Dispatch, useState } from "react";
+import { DFAInterface } from "../../interfaces/dfa";
 const ControlPanel = ({
   dfa,
   setActiveEdge,
-  activeEdge
+  activeEdge,
 }: {
-  dfa: DFAInterface
-  setActiveEdge?: Dispatch<string>
-  activeEdge?: string
+  dfa: DFAInterface;
+  setActiveEdge?: Dispatch<string>;
+  activeEdge?: string;
 }) => {
-  const [input, setInput] = useState('')
-  const [testResult, setTestResult] = useState(null)
-  const [simSpeed, setSimSpeed] = useState(300)
-  const [maxItr, setMaxItr] = useState(1000)
+  const [input, setInput] = useState("");
+  const [testResult, setTestResult] = useState(null);
+  const [simSpeed, setSimSpeed] = useState(300);
+  const [maxItr, setMaxItr] = useState(1000);
 
   const [exampleInputs, setExampleInputs] = useState({
     data: [],
     found: false,
     visible: false,
-    loading: false
-  })
+    loading: false,
+  });
   const [addNewTransition, setAddNewTransition] = useState({
-    source: '',
-    target: '',
-    input: ''
-  })
+    source: "",
+    target: "",
+    input: "",
+  });
   const [newState, setNewState] = useState({
-    name: '',
+    name: "",
     isFinal: false,
-    isInitial: false
-  })
-  const [processingString, setProcessingString] = useState('')
+    isInitial: false,
+  });
+  const [processingString, setProcessingString] = useState("");
 
   const addStateSourceHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, source: e.target.value }))
-  }
+    setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
+  };
   const addStateTargetHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, target: e.target.value }))
-  }
+    setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
+  };
   const addStateInputHandler = (e) => {
-    if (e.target.value.length > 1) return
-    setAddNewTransition((prev) => ({ ...prev, input: e.target.value }))
-  }
+    if (e.target.value.length > 1) return;
+    setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
+  };
   const addTransitionHandler = () => {
-    const { source, target, input } = addNewTransition
+    const { source, target, input } = addNewTransition;
 
-    dfa.addTransition(source, target, input)
-    setAddNewTransition((prev) => ({ ...prev, input: '' }))
-  }
+    dfa.addTransition(source, target, input);
+    setAddNewTransition((prev) => ({ ...prev, input: "" }));
+  };
 
   const addNewStateHandler = () => {
-    const { name, isFinal, isInitial } = newState
-    dfa.addState(name, isFinal, isInitial)
-    setNewState({ name: '', isFinal: false, isInitial: false })
-  }
+    const { name, isFinal, isInitial } = newState;
+    dfa.addState(name, isFinal, isInitial);
+    setNewState({ name: "", isFinal: false, isInitial: false });
+  };
 
   const testStringHandler = () => {
-    const { accepted } = dfa.test(input)
-    setTestResult(accepted)
-  }
+    const { accepted } = dfa.test(input);
+    setTestResult(accepted);
+  };
   const deleteStateHandler = (state: string) => {
-    dfa.removeState(state)
-  }
+    dfa.removeState(state);
+  };
 
   const simulateGraphically = async () => {
-    const { accepted, path } = dfa.test(input)
-    let i = 0
+    const { accepted, path } = dfa.test(input);
+    let i = 0;
     for (const edge of path) {
-      setActiveEdge(edge)
-      i++
-      setProcessingString(input.slice(0, i))
-      await new Promise((resolve) => setTimeout(resolve, simSpeed))
+      setActiveEdge(edge);
+      i++;
+      setProcessingString(input.slice(0, i));
+      await new Promise((resolve) => setTimeout(resolve, simSpeed));
     }
     if (accepted) {
-      setTestResult(true)
+      setTestResult(true);
     } else {
-      setTestResult(false)
+      setTestResult(false);
     }
-    setActiveEdge(null)
-  }
+    setActiveEdge(null);
+  };
 
-  const transitionTable = dfa.print()
+  const transitionTable = dfa.print();
 
   return (
     <div className="">
@@ -92,9 +90,9 @@ const ControlPanel = ({
             <input
               value={input}
               onChange={(e) => {
-                if (testResult) setTestResult(null)
-                if (activeEdge) setActiveEdge(null)
-                setInput(e.target.value)
+                if (testResult) setTestResult(null);
+                if (activeEdge) setActiveEdge(null);
+                setInput(e.target.value);
               }}
               type="text"
               placeholder="Input test string"
@@ -104,10 +102,10 @@ const ControlPanel = ({
               onClick={testStringHandler}
               className={`btn ml-auto   ${
                 testResult === true
-                  ? 'btn-success'
+                  ? "btn-success"
                   : testResult === false
-                  ? 'btn-error'
-                  : 'btn-primary'
+                  ? "btn-error"
+                  : "btn-primary"
               } min-w-[8em]`}
               disabled={
                 dfa.initialState === null ||
@@ -115,17 +113,17 @@ const ControlPanel = ({
                 !!activeEdge
               }
             >
-              {testResult === null && 'Test'}
-              {testResult === true && 'Accepted'}
-              {testResult === false && 'Rejected'}
+              {testResult === null && "Test"}
+              {testResult === true && "Accepted"}
+              {testResult === false && "Rejected"}
             </button>
 
             <button
               onClick={() => {
-                setInput('')
-                setTestResult(null)
-                setActiveEdge(null)
-                setProcessingString('')
+                setInput("");
+                setTestResult(null);
+                setActiveEdge(null);
+                setProcessingString("");
               }}
               className="btn btn-secondary"
             >
@@ -150,7 +148,7 @@ const ControlPanel = ({
                 !!activeEdge
               }
               onClick={() => {
-                simulateGraphically()
+                simulateGraphically();
               }}
               className="btn  w-full"
             >
@@ -164,24 +162,22 @@ const ControlPanel = ({
                 </pre>
                 {testResult != null &&
                   !activeEdge &&
-                  (testResult === false
-                    ? (
+                  (testResult === false ? (
                     <pre
                       data-prefix="$"
                       className="bg-warning text-warning-content"
                     >
                       <code>
                         {processingString.length === input.length
-                          ? 'Not terminating on accepting state.'
-                          : 'Invalid input.'}
+                          ? "Not terminating on accepting state."
+                          : "Invalid input."}
                       </code>
                     </pre>
-                      )
-                    : (
+                  ) : (
                     <pre data-prefix="$" className="text-success">
                       <code>Accepted🎉!</code>
                     </pre>
-                      ))}
+                  ))}
               </div>
             )}
 
@@ -189,7 +185,7 @@ const ControlPanel = ({
               <React.Fragment>
                 <div
                   className={`badge badge-sm   ${
-                    maxItr > 20000 && 'badge-error'
+                    maxItr > 20000 && "badge-error"
                   } `}
                 >
                   Max Iterations: {maxItr} {maxItr > 20000}
@@ -208,24 +204,24 @@ const ControlPanel = ({
                     dfa.initialState === null || dfa.finalStates.length === 0
                   }
                   onClick={async () => {
-                    setExampleInputs((prev) => ({ ...prev, loading: true }))
+                    setExampleInputs((prev) => ({ ...prev, loading: true }));
                     const strings = await dfa.generateValidStrings(
                       100000,
                       maxItr
-                    )
-                    setExampleInputs((prev) => ({
+                    );
+                    setExampleInputs(() => ({
                       data: strings,
                       found: strings.length > 0,
                       visible: true,
-                      loading: false
-                    }))
+                      loading: false,
+                    }));
                   }}
                   className={`btn  w-full ${
-                    exampleInputs.loading && 'loading'
+                    exampleInputs.loading && "loading"
                   } `}
                 >
                   Try finding valid strings &nbsp;
-                  {maxItr > 20000 && '(Page may freeze)'}
+                  {maxItr > 20000 && "(Page may freeze)"}
                 </button>
               </React.Fragment>
             )}
@@ -238,7 +234,7 @@ const ControlPanel = ({
                       data-prefix="$"
                       className="bg-error text-error-content"
                     >
-                      <code>Couldn't find anything 😓</code>
+                      <code>Couldn&apost; find anything 😓</code>
                     </pre>
                   )}
                   {exampleInputs.found && (
@@ -247,7 +243,7 @@ const ControlPanel = ({
                         <code>Valid Strings...</code>
                       </pre>
                       {exampleInputs.data.map((str) => (
-                        <pre data-prefix="$">
+                        <pre key={str} data-prefix="$">
                           <code>{str}</code>
                         </pre>
                       ))}
@@ -274,7 +270,7 @@ const ControlPanel = ({
                 onChange={(e) =>
                   setNewState((prev) => ({ ...prev, name: e.target.value }))
                 }
-              />{' '}
+              />{" "}
               <button
                 onClick={addNewStateHandler}
                 className="btn btn-success"
@@ -294,7 +290,7 @@ const ControlPanel = ({
                   onChange={(e) =>
                     setNewState((prev) => ({
                       ...prev,
-                      isInitial: e.target.checked
+                      isInitial: e.target.checked,
                     }))
                   }
                 />
@@ -308,7 +304,7 @@ const ControlPanel = ({
                   onChange={(e) =>
                     setNewState((prev) => ({
                       ...prev,
-                      isFinal: e.target.checked
+                      isFinal: e.target.checked,
                     }))
                   }
                 />
@@ -328,11 +324,11 @@ const ControlPanel = ({
                         onChange={addStateSourceHandler}
                         className="select select-sm"
                       >
-                        <option disabled selected value={''}>
+                        <option disabled selected value={""}>
                           Source
                         </option>
                         {dfa.states.map((state, index) => {
-                          return <option key={index}>{state}</option>
+                          return <option key={index}>{state}</option>;
                         })}
                       </select>
                     </th>
@@ -351,11 +347,11 @@ const ControlPanel = ({
                         onChange={addStateTargetHandler}
                         className="select select-sm"
                       >
-                        <option disabled selected value={''}>
+                        <option disabled selected value={""}>
                           Target
                         </option>
                         {dfa.states.map((state, index) => {
-                          return <option key={index}>{state}</option>
+                          return <option key={index}>{state}</option>;
                         })}
                       </select>
                     </th>
@@ -364,9 +360,9 @@ const ControlPanel = ({
               </table>
               <button
                 disabled={
-                  addNewTransition.source === '' ||
-                  addNewTransition.target === '' ||
-                  addNewTransition.input === ''
+                  addNewTransition.source === "" ||
+                  addNewTransition.target === "" ||
+                  addNewTransition.input === ""
                 }
                 onClick={addTransitionHandler}
                 className="btn  w-full"
@@ -386,10 +382,10 @@ const ControlPanel = ({
                   <th>States</th>
                   {transitionTable[0].slice(1).map((item, index) => {
                     return (
-                      <th key={index} className={'text-center'}>
+                      <th key={index} className={"text-center"}>
                         {item}
                       </th>
-                    )
+                    );
                   })}
                   <th>Delete</th>
                 </tr>
@@ -404,18 +400,18 @@ const ControlPanel = ({
                             <span
                               className={`rounded-full border-2 p-2 ${
                                 dfa.finalStates.includes(item) && index === 0
-                                  ? 'border-green-400'
-                                  : 'border-transparent'
+                                  ? "border-green-400"
+                                  : "border-transparent"
                               } ${
                                 dfa.initialState === item && index == 0
-                                  ? 'font-bold text-pink-500'
-                                  : ''
+                                  ? "font-bold text-pink-500"
+                                  : ""
                               }`}
                             >
                               {item}
                             </span>
                           </td>
-                        )
+                        );
                       })}
                       <td>
                         <button
@@ -439,7 +435,7 @@ const ControlPanel = ({
                         </button>
                       </td>
                     </tr>
-                  )
+                  );
                 })}
               </tbody>
             </table>
@@ -447,7 +443,7 @@ const ControlPanel = ({
         </div>
       </React.Fragment>
     </div>
-  )
-}
+  );
+};
 
-export default ControlPanel
+export default ControlPanel;

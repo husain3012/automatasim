@@ -21,7 +21,7 @@ export default function CustomEdge ({
   sourcePosition?: Position
   targetPosition?: Position
   style?: React.CSSProperties
-  data?: any
+  data?: { text: string}
   markerEnd?: string
 }): React.ReactNode {
   const [edgePath] = getBezierPath({

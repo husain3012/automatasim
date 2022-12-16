@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import ControlPanel from './ControlPanel'
 import Canvas from './Canvas'
 import useDFA from '../../hooks/useDFA'
