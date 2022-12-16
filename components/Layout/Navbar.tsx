@@ -11,6 +11,11 @@ const Navbar = () => {
       </div>
       <div className="flex-none">
         <ul className="menu menu-horizontal p-0">
+        <li>
+            <a>
+              <Link href="/examples">Examples</Link>
+            </a>
+          </li>
           <li>
             <a>
               <Link href="/dfa">DFA</Link>
