@@ -3,6 +3,7 @@ import Link from 'next/link'
 import Head from 'next/head'
 import Navbar from './Layout/Navbar'
 import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from 'react-icons/ai'
+import { Toaster } from 'react-hot-toast'
 interface Props {
   children?: ReactNode
   title?: string
@@ -19,6 +20,7 @@ const Layout = ({ children, title = 'Automata' }: Props) => (
       <header>
         <Navbar />
       </header>
+      <Toaster/>
       <div className="min-h-screen min-w-screen">{children}</div>
     </div>
     <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
