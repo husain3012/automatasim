@@ -26,11 +26,7 @@ const useDFA = (): DFAInterface => {
     }
   };
 
-  const addState = (
-    state: string,
-    isFinal = false,
-    isInitial = false
-  ) => {
+  const addState = (state: string, isFinal = false, isInitial = false) => {
     // if state already exists, do not add it
     if (dfa.states.includes(state)) {
       return;
@@ -205,7 +201,6 @@ const useDFA = (): DFAInterface => {
 
     return await new Promise((resolve) => {
       let iterations = 0;
-
       while (queue.length > 0) {
         iterations++;
         if (iterations > maxItr) {
@@ -233,6 +228,33 @@ const useDFA = (): DFAInterface => {
     });
   };
 
+  const stringify = () => {
+    const dfa_copy = {
+      states: dfa.states,
+      initialState: dfa.initialState,
+      finalStates: dfa.finalStates,
+      inputSymbols: Array.from(dfa.inputSymbols),
+      transitions: dfa.transitions,
+    };
+    console.log(dfa_copy);
+
+    return JSON.stringify(dfa_copy);
+  };
+  const load = (dfaString: string) => {
+    const dfa_copy = JSON.parse(dfaString);
+    dfa_copy.inputSymbols = new Set(dfa_copy.inputSymbols);
+    setDfa(dfa_copy);
+  };
+  const reset = () => {
+    setDfa({
+      states: [],
+      inputSymbols: new Set(),
+      transitions: {},
+      initialState: null,
+      finalStates: [],
+    });
+  };
+
   return {
     ...dfa,
     addState,
@@ -242,6 +264,9 @@ const useDFA = (): DFAInterface => {
     test,
     print,
     generateValidStrings,
+    stringify,
+    load,
+    reset,
   };
 };
 export default useDFA;

@@ -18,4 +18,7 @@ export interface DFAInterface {
 
   print: () => string[][]
   generateValidStrings: (length: number, maxItr?: number) => Promise<string[]>
+  stringify: () => string
+  load: (json: string) => void
+  reset: () => void
 }
