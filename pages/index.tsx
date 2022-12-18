@@ -33,8 +33,8 @@ const IndexPage = () => (
             </span>
           </div>
           <div className="flex gap-2">
-            <Link href="/dfa" className="btn btn-primary">
-              Build
+            <Link href="/examples" className="btn btn-primary">
+              Examples
             </Link>
             <Link href="/#how_to_use" className="btn gap-2">
               <svg

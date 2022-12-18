@@ -1,5 +1,5 @@
 import React, { Dispatch, useState } from "react";
-import { DFAInterface } from "../../interfaces/dfa";
+import { DFAInterface } from "../../interfaces/dfa-hook";
 const ControlPanel = ({
   dfa,
   setActiveEdge,
@@ -323,8 +323,9 @@ const ControlPanel = ({
                         value={addNewTransition.source}
                         onChange={addStateSourceHandler}
                         className="select select-sm"
+                        defaultValue={""}
                       >
-                        <option disabled selected value={""}>
+                        <option disabled value={""}>
                           Source
                         </option>
                         {dfa.states.map((state, index) => {
@@ -346,8 +347,9 @@ const ControlPanel = ({
                         value={addNewTransition.target}
                         onChange={addStateTargetHandler}
                         className="select select-sm"
+                        defaultValue={""}
                       >
-                        <option disabled selected value={""}>
+                        <option disabled value={""}>
                           Target
                         </option>
                         {dfa.states.map((state, index) => {
