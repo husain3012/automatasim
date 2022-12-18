@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { DFAInterface } from "../interfaces/dfa";
+import { DFAInterface } from "../interfaces/dfa-hook";
 
 const initialState: {
   states: string[];
@@ -236,7 +236,6 @@ const useDFA = (): DFAInterface => {
       inputSymbols: Array.from(dfa.inputSymbols),
       transitions: dfa.transitions,
     };
-    console.log(dfa_copy);
 
     return JSON.stringify(dfa_copy);
   };

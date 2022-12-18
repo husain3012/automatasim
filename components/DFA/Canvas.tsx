@@ -7,7 +7,7 @@ import ReactFlow, {
   Position,
 } from 'reactflow'
 import 'reactflow/dist/style.css'
-import { DFAInterface } from '../../interfaces/dfa'
+import { DFAInterface } from '../../interfaces/dfa-hook'
 import { SmartBezierEdge } from '@tisoap/react-flow-smart-edge'
 const edgeTypes = {
   smart: SmartBezierEdge
@@ -127,11 +127,9 @@ const Canvas = ({
       })
       return
     }
-    console.log(modal.input.split(','))
     const uniqueInputs = new Set<string>()
     modal.input.split(',').forEach((inp) => uniqueInputs.add(inp))
 
-    console.log(uniqueInputs)
     for (const inp of Array.from(uniqueInputs)) {
       dfa.addTransition(modal.from, modal.to, inp)
     }

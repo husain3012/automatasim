@@ -4,15 +4,39 @@ import Canvas from "./Canvas";
 import useDFA from "../../hooks/useDFA";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 import { toast } from "react-hot-toast";
-
+import { useRouter } from "next/router";
+import { getExampleById } from "../../services/getExamples";
 const DFA = () => {
-  const dfa = useDFA();
 
+  const dfa = useDFA();
+  const router = useRouter();
+ 
   useEffect(() => {
-    const dfaString = localStorage.getItem("dfa");
-    if (dfaString) {
-      dfa.load(dfaString);
-    }
+    const loadDfa = async () => {
+      const dfaString = localStorage.getItem("dfa");
+      const loadDfa = router.query?.load;
+
+      if (loadDfa) {
+        try {
+          const example = await getExampleById(loadDfa as string);
+          if (example) {
+            dfa.load(example.data);
+            toast.success("DFA loaded!");
+            return;
+          } else {
+            toast.error("No dfa found!");
+          }
+        } catch (error) {
+          console.log(error);
+          toast.error("Unknown error!");
+        }
+      }
+      if (dfaString) {
+        toast.success("DFA loaded from local storage!");
+        dfa.load(dfaString);
+      }
+    };
+    loadDfa();
   }, []);
 
   const [activeEdge, setActiveEdge] = useState(null);
