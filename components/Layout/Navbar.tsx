@@ -34,6 +34,9 @@ const Navbar = () => {
       </div>
       <div className="flex-none border-r-2 border-base-200 px-2">
         <ul className="menu menu-horizontal p-0">
+        <li>
+            <Link href="/examples">Examples</Link>
+          </li>
           <li>
             <Link href="/community">Community</Link>
           </li>

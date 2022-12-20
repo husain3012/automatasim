@@ -69,7 +69,7 @@ const Canvas = ({
               type: MarkerType.ArrowClosed,
               width: 20,
               height: 20,
-              color: '#FF0072'
+              color: activeEdge === currentEdge ? '#00FF7F' : '#FF0072'
             },
             type: 'smart',
             data: { text: input },

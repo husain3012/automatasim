@@ -5,7 +5,7 @@ import useDFA from "../../hooks/useDFA";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import { getExampleById } from "../../services/examples";
+import { getPostById } from "../../services/posts";
 const DFA = () => {
   const dfa = useDFA();
   const router = useRouter();
@@ -17,11 +17,10 @@ const DFA = () => {
 
       if (loadDfa) {
         try {
-          const example = await getExampleById(loadDfa as string);
+          const example = await getPostById(loadDfa as string);
           if (example) {
             dfa.load(example.data);
             toast.success("DFA loaded!");
-            return;
           } else {
             toast.error("No dfa found!");
           }
@@ -29,8 +28,9 @@ const DFA = () => {
           console.log(error);
           toast.error("Unknown error!");
         }
+      
       }
-      if (dfaString) {
+      else if (dfaString) {
         toast.success("DFA loaded from local storage!");
         dfa.load(dfaString);
       }
@@ -95,7 +95,9 @@ const DFA = () => {
                     <AiFillRightCircle className="w-6 h-6" />
                   )}
                 </button>
-                {!panelCollapsed && <h1 className="text-2xl font-bold w-full text-center">DFA</h1>}
+                {!panelCollapsed && (
+                  <h1 className="text-2xl font-bold w-full text-center">DFA</h1>
+                )}
               </div>
               {!panelCollapsed && (
                 <div className="flex gap-2 mx-2">

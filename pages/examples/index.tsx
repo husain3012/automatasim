@@ -1,8 +1,9 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import { getExamples } from "../../services/examples";
+
 import { ExampleInterface } from "../../interfaces/example";
 import ExampleCard from "../../components/Examples/ExampleCard";
+import { getExamplePosts } from "../../services/posts";
 const Examples = ({ examples }: { examples: ExampleInterface[] }) => {
   return (
     <Layout title="Automata | Examples">
@@ -17,7 +18,7 @@ const Examples = ({ examples }: { examples: ExampleInterface[] }) => {
 };
 
 export const getServerSideProps = async () => {
-  const resp = await getExamples();
+  const resp = await getExamplePosts();
 
   return {
     props: {
