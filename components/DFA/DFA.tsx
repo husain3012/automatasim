@@ -86,7 +86,7 @@ const DFA = () => {
             <div className="flex flex-col gap-2 w-full justify-between items-center ">
               <div className="flex flex-row justify-between items-center  w-full">
                 <button
-                  className="btn btn-ghost"
+                  className="btn btn-ghost hidden sm:block"
                   onClick={() => setPanelCollapsed(!panelCollapsed)}
                 >
                   {panelCollapsed ? (

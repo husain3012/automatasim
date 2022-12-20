@@ -1,7 +1,7 @@
 import Link from "next/link";
 import React from "react";
 import { toast } from "react-hot-toast";
-import { AiOutlineGoogle } from "react-icons/ai";
+import { AiOutlineGoogle, AiOutlineMenu } from "react-icons/ai";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../atom/authAtom";
 import { logIn, logOut } from "../../firebase/auth";
@@ -32,9 +32,9 @@ const Navbar = () => {
           Automata
         </Link>
       </div>
-      <div className="flex-none border-r-2 border-base-200 px-2">
-        <ul className="menu menu-horizontal p-0">
-        <li>
+      <div className=" hidden sm:block flex-none border-r-2 border-base-200 px-2">
+        <ul className=" menu   menu-horizontal p-0">
+          <li>
             <Link href="/examples">Examples</Link>
           </li>
           <li>
@@ -48,21 +48,38 @@ const Navbar = () => {
           </li> */}
         </ul>
       </div>
+      {/* mobile view */}
+      <div className=" dropdown  dropdown-end border-r-2 border-base-100 px-2 sm:hidden">
+        <label tabIndex={0} className="btn btn-ghost">
+          <AiOutlineMenu />
+        </label>
+        <ul className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
+          <li>
+            <Link href="/examples">Examples</Link>
+          </li>
+          <li>
+            <Link href="/community">Community</Link>
+          </li>
+          <li>
+            <Link href="/dfa">DFA</Link>
+          </li>
+          {/* <li>
+            <a>Turing Machine</a>
+          </li> */}
+        </ul>
+      </div>
+      {/* mobile view ends */}
+
       {user ? (
-        <div className="dropdown  text-center mr-2">
-          <label tabIndex={0} className="avatar cursor-pointer ">
-            {
-              <span className=" text-lg w-28 text-ellipsis whitespace-nowrap overflow-hidden m-auto px-2">
-                {user.displayName.split(" ")[0]}
-              </span>
-            }
-            <div className="w-12 rounded-full">
-              <img referrerPolicy="no-referrer" src={user.photoURL} />
+        <div className="dropdown dropdown-end mx-2">
+          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full">
+              <img src={user.photoURL} />
             </div>
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-full m-2"
+            className="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52"
           >
             <li>
               <button
@@ -72,11 +89,18 @@ const Navbar = () => {
                 Logout
               </button>
             </li>
+            {/* <li>
+              <a>Settings</a>
+            </li>
+            <li>
+              <a>Logout</a>
+            </li> */}
           </ul>
         </div>
       ) : (
         <button onClick={loginHandler} className="btn btn-secondary">
           Sign in
+          
           <span className="px-2 text-lg">
             <AiOutlineGoogle />
           </span>
