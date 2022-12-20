@@ -18,10 +18,6 @@ const initialState: {
 const useDFA = (): DFAInterface => {
   const [dfa, setDfa] = useState(initialState);
 
-  useEffect(() => {
-    const dfaString = stringify();
-    localStorage.setItem("dfa", dfaString);
-  }, [dfa]);
 
   const updateSetOfInputSymbols = () => {
     dfa.inputSymbols.clear();

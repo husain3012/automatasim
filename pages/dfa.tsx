@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import DFA from "../components/DFA/DFA";
-import { getExampleById } from "../services/examples";
+import { getPostById } from "../services/posts";
 
 const Dfa = () => {
   return (
@@ -17,7 +17,7 @@ export const getServerSideProps = async (context) => {
     return {
       props: {},
     };
-  const getExample = await getExampleById(loadQuery);
+  const getExample = await getPostById(loadQuery);
   return {
     props: {
       load: getExample,

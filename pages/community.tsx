@@ -3,9 +3,10 @@ import { toast } from "react-hot-toast";
 import Layout from "../components/Layout";
 import ExampleCard from "../components/Examples/ExampleCard";
 import { ExampleInterface } from "../interfaces/example";
-import { getCommunityPosts, postCommunityPost } from "../services/community";
+import { getCommunityPosts, postCommunityPost } from "../services/posts";
 import { useRecoilValue } from "recoil";
 import { authState } from "../atom/authAtom";
+import dayjs from "dayjs";
 
 const Community = ({ posts }: { posts: ExampleInterface[] }) => {
   const [communityPosts, setCommunityPosts] = useState(posts);
@@ -65,9 +66,17 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
   return (
     <Layout>
       <div className="container mx-auto flex my-2 justify-between items-center">
+        <div className="flex flex-col gap-2">
         <h1 className="text-4xl my-2 font-bold">Community</h1>
+        <p className="">Automatons posted by the community</p>
+        </div>
         <div className="ml-auto">
-          <div className={` ${!auth?"tooltip":""} tooltip-secondary tooltip-bottom`} data-tip="Login!">
+          <div
+            className={` ${
+              !auth ? "tooltip" : ""
+            } tooltip-secondary tooltip-bottom`}
+            data-tip="Login!"
+          >
             <button
               disabled={!auth}
               className="btn btn-secondary"
@@ -80,13 +89,13 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
       </div>
       <div className="divider"></div>
 
-      <div className="container mx-auto flex flex-col gap-2">
-        <p className="text-xl">Automatons posted by the community~</p>
-        <div className="flex flex-col gap-2">
+       
+      <div className="px-4 sm:px-24 shadow-sm m-auto flex flex-wrap gap-4 p-4 justify-center w-full">
+       
           {communityPosts.map((post) => (
             <ExampleCard key={post.id} example={post} />
           ))}
-        </div>
+       
       </div>
 
       <div className={`modal ${isPostModalOpen ? "modal-open" : ""}`}>
@@ -203,7 +212,6 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
 
 export const getServerSideProps = async () => {
   const resp = await getCommunityPosts();
-  console.log(resp);
 
   return {
     props: {
