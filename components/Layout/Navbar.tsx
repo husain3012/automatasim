@@ -28,21 +28,17 @@ const Navbar = () => {
   return (
     <nav className="navbar bg-base-100 border-b-base-300 border-b-2">
       <div className="flex-1">
-        <a className="btn btn-ghost normal-case text-xl">
-          <Link href="/">Automata</Link>
-        </a>
+        <Link className="btn btn-ghost normal-case text-xl" href="/">
+          Automata
+        </Link>
       </div>
-      <div className="flex-none">
+      <div className="flex-none border-r-2 border-base-200 px-2">
         <ul className="menu menu-horizontal p-0">
           <li>
-            <a>
-              <Link href="/community">Community</Link>
-            </a>
+            <Link href="/community">Community</Link>
           </li>
           <li>
-            <a>
-              <Link href="/dfa">DFA</Link>
-            </a>
+            <Link href="/dfa">DFA</Link>
           </li>
           {/* <li>
             <a>Turing Machine</a>
@@ -50,7 +46,7 @@ const Navbar = () => {
         </ul>
       </div>
       {user ? (
-        <div className="dropdown w-40 text-center">
+        <div className="dropdown  text-center mr-2">
           <label tabIndex={0} className="avatar cursor-pointer ">
             {
               <span className=" text-lg w-28 text-ellipsis whitespace-nowrap overflow-hidden m-auto px-2">
@@ -63,7 +59,7 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content menu p-2 shadow bg-base-200 rounded-box"
+            className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-full m-2"
           >
             <li>
               <button

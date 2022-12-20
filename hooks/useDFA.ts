@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DFAInterface } from "../interfaces/dfa-hook";
 
 const initialState: {
@@ -17,6 +17,12 @@ const initialState: {
 
 const useDFA = (): DFAInterface => {
   const [dfa, setDfa] = useState(initialState);
+
+  useEffect(() => {
+    const dfaString = stringify();
+    localStorage.setItem("dfa", dfaString);
+  }, [dfa]);
+
   const updateSetOfInputSymbols = () => {
     dfa.inputSymbols.clear();
     for (const from in dfa.transitions) {

@@ -27,7 +27,7 @@ const Layout = ({ children, title = "Automata" }: Props) => (
           <Navbar />
         </header>
         <Toaster />
-        <div className="min-h-screen min-w-screen">{children}</div>
+        <div className="min-h-screen min-w-screen px-2">{children}</div>
       </div>
       <footer className="footer footer-center p-10 bg-base-200 text-base-content rounded">
         <div className="grid grid-flow-col gap-4">

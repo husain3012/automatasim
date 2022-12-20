@@ -1,6 +1,6 @@
 import React from "react";
 import Layout from "../../components/Layout";
-import { getExamples } from "../../services/getExamples";
+import { getExamples } from "../../services/examples";
 import { ExampleInterface } from "../../interfaces/example";
 import ExampleCard from "../../components/Examples/ExampleCard";
 const Examples = ({ examples }: { examples: ExampleInterface[] }) => {
@@ -23,7 +23,7 @@ export const getServerSideProps = async () => {
     props: {
       examples: resp,
     },
-  };
+};
 };
 
 export default Examples;
