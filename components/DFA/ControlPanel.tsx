@@ -234,7 +234,7 @@ const ControlPanel = ({
                       data-prefix="$"
                       className="bg-error text-error-content"
                     >
-                      <code>Couldn&apost; find anything 😓</code>
+                      <code>Could not find anything 😓</code>
                     </pre>
                   )}
                   {exampleInputs.found && (
@@ -376,7 +376,7 @@ const ControlPanel = ({
         </React.Fragment>
         <div className="divider"></div>
 
-        <div className="max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
+        <div className="max-w-sm md:max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
           {dfa.states.length > 0 && (
             <table className="table ">
               <thead>
