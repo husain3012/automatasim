@@ -1,5 +1,9 @@
 {
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "husain3012/automatasim"
+  },
   "scripts": {
     "dev": "next",
     "build": "next build",
