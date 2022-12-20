@@ -234,7 +234,7 @@ const ControlPanel = ({
                       data-prefix="$"
                       className="bg-error text-error-content"
                     >
-                      <code>Couldn&apost; find anything 😓</code>
+                      <code>Could not find anything 😓</code>
                     </pre>
                   )}
                   {exampleInputs.found && (

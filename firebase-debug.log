@@ -1,0 +1,48 @@
+[debug] [2022-12-20T10:38:01.837Z] ----------------------------------------------------------------------
+[debug] [2022-12-20T10:38:01.840Z] Command:       /home/husain3012/.nvm/versions/node/v16.15.1/bin/node /home/husain3012/.nvm/versions/node/v16.15.1/bin/firebase deploy
+[debug] [2022-12-20T10:38:01.841Z] CLI Version:   11.19.0
+[debug] [2022-12-20T10:38:01.841Z] Platform:      linux
+[debug] [2022-12-20T10:38:01.841Z] Node Version:  v16.15.1
+[debug] [2022-12-20T10:38:01.841Z] Time:          Tue Dec 20 2022 16:08:01 GMT+0530 (India Standard Time)
+[debug] [2022-12-20T10:38:01.842Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-12-20T10:38:01.910Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-12-20T10:38:01.911Z] > authorizing via signed-in user (hsr3012kalimg@gmail.com)
+[debug] [2022-12-20T10:38:01.911Z] [iam] checking project automatasim for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-12-20T10:38:01.913Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions [none]
+[debug] [2022-12-20T10:38:01.914Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions x-goog-quota-user=projects/automatasim
+[debug] [2022-12-20T10:38:01.914Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-12-20T10:38:03.414Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions 200
+[debug] [2022-12-20T10:38:03.415Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-12-20T10:38:03.417Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/automatasim [none]
+[debug] [2022-12-20T10:38:03.862Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/automatasim 200
+[debug] [2022-12-20T10:38:03.862Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/automatasim {"projectId":"automatasim","projectNumber":"649604977800","displayName":"automatasim","name":"projects/automatasim","resources":{"hostingSite":"automatasim"},"state":"ACTIVE","etag":"1_11766814-53a2-42c9-81c2-4fb976be7867"}
+[debug] [2022-12-20T10:38:04.890Z] Error: Epic fail.
+    at prepareFrameworks (/home/husain3012/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/frameworks/index.js:228:19)
+    at async deploy (/home/husain3012/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/deploy/index.js:53:13)
+[error] 
+[error] Error: An unexpected error has occurred.
+[debug] [2022-12-20T10:43:19.568Z] ----------------------------------------------------------------------
+[debug] [2022-12-20T10:43:19.570Z] Command:       /home/husain3012/.nvm/versions/node/v16.15.1/bin/node /home/husain3012/.nvm/versions/node/v16.15.1/bin/firebase deploy
+[debug] [2022-12-20T10:43:19.571Z] CLI Version:   11.19.0
+[debug] [2022-12-20T10:43:19.571Z] Platform:      linux
+[debug] [2022-12-20T10:43:19.571Z] Node Version:  v16.15.1
+[debug] [2022-12-20T10:43:19.572Z] Time:          Tue Dec 20 2022 16:13:19 GMT+0530 (India Standard Time)
+[debug] [2022-12-20T10:43:19.572Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-12-20T10:43:19.647Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-12-20T10:43:19.648Z] > authorizing via signed-in user (hsr3012kalimg@gmail.com)
+[debug] [2022-12-20T10:43:19.648Z] [iam] checking project automatasim for permissions ["firebase.projects.get","firebasehosting.sites.update"]
+[debug] [2022-12-20T10:43:19.651Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions [none]
+[debug] [2022-12-20T10:43:19.652Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions x-goog-quota-user=projects/automatasim
+[debug] [2022-12-20T10:43:19.652Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-12-20T10:43:21.293Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions 200
+[debug] [2022-12-20T10:43:21.293Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/automatasim:testIamPermissions {"permissions":["firebase.projects.get","firebasehosting.sites.update"]}
+[debug] [2022-12-20T10:43:21.295Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/automatasim [none]
+[debug] [2022-12-20T10:43:21.810Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/automatasim 200
+[debug] [2022-12-20T10:43:21.811Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/automatasim {"projectId":"automatasim","projectNumber":"649604977800","displayName":"automatasim","name":"projects/automatasim","resources":{"hostingSite":"automatasim"},"state":"ACTIVE","etag":"1_11766814-53a2-42c9-81c2-4fb976be7867"}
+[debug] [2022-12-20T10:43:22.884Z] Error: Epic fail.
+    at prepareFrameworks (/home/husain3012/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/frameworks/index.js:228:19)
+    at async deploy (/home/husain3012/.nvm/versions/node/v16.15.1/lib/node_modules/firebase-tools/lib/deploy/index.js:53:13)
+[error] 
+[error] Error: An unexpected error has occurred.
