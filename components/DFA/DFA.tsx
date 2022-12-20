@@ -5,12 +5,11 @@ import useDFA from "../../hooks/useDFA";
 import { AiFillLeftCircle, AiFillRightCircle } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import { useRouter } from "next/router";
-import { getExampleById } from "../../services/getExamples";
+import { getExampleById } from "../../services/examples";
 const DFA = () => {
-
   const dfa = useDFA();
   const router = useRouter();
- 
+
   useEffect(() => {
     const loadDfa = async () => {
       const dfaString = localStorage.getItem("dfa");
@@ -46,12 +45,16 @@ const DFA = () => {
     input: "",
   });
 
+  const copyDfaHandler = async () => {
+    const dfaString = dfa.stringify();
+    navigator.clipboard.writeText(dfaString);
+    toast.success("DFA copied to clipboard!");
+  };
+
   const saveDfaHandler = async () => {
     const dfaString = dfa.stringify();
     localStorage.setItem("dfa", dfaString);
-    navigator.clipboard.writeText(dfaString);
-    toast.success("DFA saved and copied to clipboard!");
-    await new Promise((resolve) => setTimeout(resolve, 1000));
+    toast.success("DFA saved to local storage!");
   };
   const loadDfaHandler = () => {
     try {
@@ -80,21 +83,40 @@ const DFA = () => {
           }`}
         >
           <div className="flex flex-row justify-between items-center my-2">
-            {!panelCollapsed && (
-              <div className="flex flex-row gap-2 w-full justify-between items-center ">
-                <h1 className="text-2xl font-bold">DFA</h1>
+            <div className="flex flex-col gap-2 w-full justify-between items-center ">
+              <div className="flex flex-row justify-between items-center  w-full">
+                <button
+                  className="btn btn-ghost"
+                  onClick={() => setPanelCollapsed(!panelCollapsed)}
+                >
+                  {panelCollapsed ? (
+                    <AiFillLeftCircle className="w-6 h-6" />
+                  ) : (
+                    <AiFillRightCircle className="w-6 h-6" />
+                  )}
+                </button>
+                {!panelCollapsed && <h1 className="text-2xl font-bold w-full text-center">DFA</h1>}
+              </div>
+              {!panelCollapsed && (
                 <div className="flex gap-2 mx-2">
+                  <button
+                    className="btn btn-outline btn-sm btn-primary"
+                    onClick={saveDfaHandler}
+                  >
+                    Save
+                  </button>
+
+                  <button
+                    onClick={copyDfaHandler}
+                    className="btn btn-outline btn-sm btn-success"
+                  >
+                    Copy
+                  </button>
                   <button
                     className="btn btn-outline btn-sm btn-warning"
                     onClick={() => dfa.reset()}
                   >
                     Reset
-                  </button>
-                  <button
-                    onClick={saveDfaHandler}
-                    className="btn btn-outline btn-sm btn-success"
-                  >
-                    Save
                   </button>
 
                   <button
@@ -109,18 +131,8 @@ const DFA = () => {
                     Load
                   </button>
                 </div>
-              </div>
-            )}
-            <button
-              className="btn btn-ghost"
-              onClick={() => setPanelCollapsed(!panelCollapsed)}
-            >
-              {panelCollapsed ? (
-                <AiFillLeftCircle className="w-6 h-6" />
-              ) : (
-                <AiFillRightCircle className="w-6 h-6" />
               )}
-            </button>
+            </div>
           </div>
           <div className="divider"></div>
 

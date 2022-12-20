@@ -18,12 +18,16 @@ export const getExampleById = async (id: string) => {
   try {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
+
       return docSnap.data();
     } else {
       return null;
     }
+    
   } catch (error) {
     console.log("Error getting document:", error);
     
   }
 };
+
+

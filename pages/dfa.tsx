@@ -1,7 +1,7 @@
 import React from "react";
 import Layout from "../components/Layout";
 import DFA from "../components/DFA/DFA";
-import { getExampleById } from "../services/getExamples";
+import { getExampleById } from "../services/examples";
 
 const Dfa = () => {
   return (

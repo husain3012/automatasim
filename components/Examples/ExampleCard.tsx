@@ -25,7 +25,7 @@ const ExampleCard = ({ example }: { example: ExampleInterface }) => {
   };
   return (
     <div key={example.id} className="card w-80  bg-base-200 shadow-xl p-2 ">
-      <div className="mockup-code max-h-64 overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
+      <div className="mockup-code max-h-48 overflow-y-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
         {beautifyJSON(
           typeof example.data !== "string"
             ? JSON.stringify(example.data)
@@ -41,7 +41,23 @@ const ExampleCard = ({ example }: { example: ExampleInterface }) => {
       <div className="card-body">
         <div className="badge badge-accent badge-outline">{example.type}</div>
         <h2 className="card-title">{example.name}</h2>
+
         <p>{example.description}</p>
+        {example.author && (
+          <div className="flex flex-row justify-end">
+            <div className="avatar">
+              <div className="w-8 rounded-full">
+                <img src={example.author.avatar} referrerPolicy="no-referrer" />
+              </div>
+            </div>
+            <div className="ml-2">
+              <p className="text-base font-bold">
+                {example.author.name.split(" ")[0]}
+              </p>
+            </div>
+          </div>
+        )}
+
         <div className="card-actions justify-end">
           <button
             onClick={copyToClipboardHandler}
