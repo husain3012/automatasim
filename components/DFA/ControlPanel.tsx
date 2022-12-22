@@ -1,5 +1,7 @@
 import React, { Dispatch, useState } from "react";
 import { DFAInterface } from "../../interfaces/dfa-hook";
+
+const MAX_SIM_DELAY = 5000
 const ControlPanel = ({
   dfa,
   setActiveEdge,
@@ -132,11 +134,11 @@ const ControlPanel = ({
           </div>
 
           <div className="flex-col my-2">
-            <div className="badge badge-sm">Sim Speed: {simSpeed} ms</div>
+            <div className="badge badge-sm">Sim Speed: {simSpeed} ms/step </div>
             <input
               type="range"
               min="0"
-              max="3000"
+              max={MAX_SIM_DELAY}
               value={simSpeed}
               onChange={(e) => setSimSpeed(parseInt(e.target.value))}
               className="range range-xs"
@@ -152,7 +154,7 @@ const ControlPanel = ({
               }}
               className="btn  w-full"
             >
-              Sim
+              Simulate
             </button>
 
             {processingString.length > 0 && (
