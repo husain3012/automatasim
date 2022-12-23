@@ -311,7 +311,7 @@ const ControlPanel = ({
               </label>
             </div>
           </div>
-          <div className="divider"></div>
+          {/* <div className="divider"></div>
 
           {dfa.states.length > 0 && (
             <React.Fragment>
@@ -372,7 +372,7 @@ const ControlPanel = ({
                 Add Transition
               </button>
             </React.Fragment>
-          )}
+          )} */}
         </React.Fragment>
         <div className="divider"></div>
 

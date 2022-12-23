@@ -7,14 +7,11 @@ import { authState } from "../../atom/authAtom";
 import { logIn, logOut } from "../../firebase/auth";
 
 const NAV_LINKS: { name: string; path: string }[] = [
-  {
-    name: "Examples",
-    path: "/examples",
-  },
-  {
-    name: "Community",
-    path: "/community",
-  },
+  // {
+  //   name: "Examples",
+  //   path: "/examples",
+  // },
+ 
   {
     name: "DFA",
     path: "/dfa",
@@ -22,6 +19,10 @@ const NAV_LINKS: { name: string; path: string }[] = [
   {
     name: "PDA",
     path: "/pda",
+  },
+  {
+    name: "Community Posts",
+    path: "/community",
   },
   // {
   //   name: "Turing Machine",

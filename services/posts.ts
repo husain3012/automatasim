@@ -17,30 +17,34 @@ export const getCommunityPosts = async (): Promise<ExampleInterface[]> => {
   const communityQuery = query(communityCols, where("example", "==", false));
   const communitySnapshot = await getDocs(communityQuery);
 
-  const communityList = communitySnapshot.docs.map((doc) => {
-    const data = doc.data();
-    const createdAt = new Timestamp(
-      data.createdAt?.seconds,
-      data.createdAt?.nanoseconds
-    ).toString();
-    return {
-      id: doc.id,
-      type: data.type as string,
-      name: data.name as string,
-      description: data.description as string,
-      data: data.data as string,
-      createdAt: createdAt as string,
-      ...(data.author
-        ? {
-            author: {
-              id: data.author.id as string,
-              name: data.author.name as string,
-              avatar: data.author.avatar as string,
-            },
-          }
-        : {}),
-    };
-  });
+  const communityList = communitySnapshot.docs
+    .map((doc) => {
+      const data = doc.data();
+      const createdAt = new Timestamp(
+        data.createdAt?.seconds,
+        data.createdAt?.nanoseconds
+      )
+        .toDate()
+        .toISOString();
+      return {
+        id: doc.id,
+        type: data.type as string,
+        name: data.name as string,
+        description: data.description as string,
+        data: data.data as string,
+        createdAt: createdAt as string,
+        ...(data.author
+          ? {
+              author: {
+                id: data.author.id as string,
+                name: data.author.name as string,
+                avatar: data.author.avatar as string,
+              },
+            }
+          : {}),
+      };
+    })
+    .sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix());
   return communityList;
 };
 
@@ -50,21 +54,24 @@ export const getExamplePosts = async (): Promise<ExampleInterface[]> => {
   const exampleQuery = query(exampleCols, where("example", "==", true));
   const exampleSnapshot = await getDocs(exampleQuery);
 
-  const exampleList = exampleSnapshot.docs.map((doc) => {
-    const data = doc.data();
-    const createdAt = new Timestamp(
-      data.createdAt?.seconds,
-      data.createdAt?.nanoseconds
-    ).toString();
-    return {
-      id: doc.id,
-      type: data.type as string,
-      name: data.name as string,
-      description: data.description as string,
-      data: data.data as string,
-      createdAt: createdAt as string,
-    };
-  });
+  const exampleList = exampleSnapshot.docs
+    .map((doc) => {
+      const data = doc.data();
+      const createdAt = data.createdAt
+        ? new Timestamp(data.createdAt?.seconds, data.createdAt?.nanoseconds)
+            .toDate()
+            .toISOString()
+        : new Date().toISOString();
+      return {
+        id: doc.id,
+        type: data.type as string,
+        name: data.name as string,
+        description: data.description as string,
+        data: data.data as string,
+        createdAt: createdAt as string,
+      };
+    })
+    .sort((a, b) => dayjs(b.createdAt).unix() - dayjs(a.createdAt).unix());
   return exampleList;
 };
 

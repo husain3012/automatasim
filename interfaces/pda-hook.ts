@@ -24,7 +24,7 @@ export interface PDAInterface {
   addState: (state: string, isFinal?: boolean, isInitial?: boolean) => void;
   addTransition: (from: string, to: string, input: string, topOfStack:string, stackOperation:string) => void;
   removeState: (state: string) => void;
-  removeTransition: (from: string, to: string, input: string) => void;
+  removeTransition: (from: string, on: string, when: string, to:string, then:string) => void;
   test: (input: string) => {
     accepted: boolean;
     path: string[];

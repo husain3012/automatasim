@@ -34,7 +34,6 @@ const Canvas = ({
     topOfStack: "",
     stackOperation: "",
   });
-  console.log(activeEdge);
 
   useEffect(() => {
     const nodes_ = pda.states.map((s, idx) => ({
@@ -56,7 +55,9 @@ const Canvas = ({
         width: 50,
         height: 50,
         // add a shadow to the node if it is the active node
-        boxShadow: activeEdge?.includes(">" + s) ? "0 0 15px #00FF7F" : "none",
+        boxShadow: activeEdge?.includes(">" + s) ? "0 0 10px 5px #00FF7F" : "none",
+        transition: "box-shadow 0.2s ease",
+
       },
       sourcePosition: Position.Right,
       targetPosition: Position.Left,
@@ -178,7 +179,7 @@ const Canvas = ({
   };
 
   return (
-    <React.Fragment>
+    <div className="h-full flex flex-col relative">
       <ReactFlow
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
@@ -189,11 +190,12 @@ const Canvas = ({
         onConnect={onConnect}
       >
         <Background />
-        <div className="h-full w-40 flex flex-col justify-end items-center p-4 relative">
-          <Stack className="absolute z-10 bottom-12" stack={stackState} />
-          <h3 className="text-lg tracking-wider">STACK</h3>
-        </div>
+       
       </ReactFlow>
+      <div className="h-full mt-auto bottom-0  rounded z-10 flex flex-col justify-end items-center px-8 py-2 absolute  border-r-2 border-base-300">
+          <Stack className="absolute z-20 bottom-12 " stack={stackState} />
+          <h3 className="text-lg text-base-content tracking-wider">STACK</h3>
+        </div>
       {modal.show && (
         <div className="modal modal-open">
           <div className="modal-box">
@@ -309,7 +311,7 @@ const Canvas = ({
          
         </div>
       )}
-    </React.Fragment>
+    </div>
   );
 };
 

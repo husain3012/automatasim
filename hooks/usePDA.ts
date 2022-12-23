@@ -59,7 +59,22 @@ const usePDA = (): PDAInterface => {
   const [pda, setPda] = useState(initialState);
 
   const updateSetOfInputSymbols = () => {
-    pda.inputSymbols.clear();
+    const updated_input_symbols = new Set<string>();
+    const updated_stack_symbols = new Set<string>();
+    for (const state in pda.transitions) {
+      for (const input in pda.transitions[state]) {
+        for (const topOfStack in pda.transitions[state][input]) {
+          const { stack } = pda.transitions[state][input][topOfStack];
+          updated_input_symbols.add(input);
+          stack.split("").forEach((s) => updated_stack_symbols.add(s));
+        }
+      }
+    }
+    setPda((prev) => ({
+      ...prev,
+      inputSymbols: new Set(Array.from(updated_input_symbols)),
+      stackSymbols: new Set(Array.from(updated_stack_symbols)),
+    }));
   };
 
   const addState = (state: string, isFinal = false, isInitial = false) => {
@@ -167,21 +182,29 @@ const usePDA = (): PDAInterface => {
     setPda(currentState);
     updateSetOfInputSymbols();
   };
-  const removeTransition = (from: string, to: string, input: string) => {
-    // if from state does not exist, do not remove transition
-    // if (!pda.states.includes(from)) {
-    //   return;
-    // }
-    // // if transition does not exist, do not remove it
-    // if (!pda.transitions[from][input]) {
-    //   return;
-    // }
-    // if (pda.transitions[from][input] != to) {
-    //   return;
-    // }
-    delete pda.transitions[from][input];
-    // update set of input symbols:
-    updateSetOfInputSymbols();
+  const removeTransition = (
+    from: string,
+    on: string,
+    when: string,
+    to: string,
+    then: string
+  ) => {
+    const pda_copy = { ...pda };
+    try {
+      const transitionReference = pda_copy.transitions[from][on][when];
+      if (
+        transitionReference &&
+        transitionReference.next === to &&
+        transitionReference.stack === then
+      ) {
+        delete pda_copy.transitions[from][on][when];
+        setPda(pda_copy);
+        updateSetOfInputSymbols();
+      }
+    } catch (error) {
+      console.log(error);
+      console.log("Transition does not exist");
+    }
   };
 
   const test = (
@@ -219,11 +242,7 @@ const usePDA = (): PDAInterface => {
         };
 
       const stackOperation = stackTopMatch.stack;
-      console.log(
-        `(${current_state}, ${char}, ${stackTop})=(${stackTopMatch.next}, ${
-          stackTopMatch.stack || INITIAL_STACK_SYMBOL
-        })`
-      );
+
       if (stackOperation && stackOperation !== "") {
         stackOperation
           .split("")
@@ -234,7 +253,12 @@ const usePDA = (): PDAInterface => {
       }
 
       path.push(current_state + ">" + stackTopMatch.next);
-      stackStates.push(current_stack);
+      //  something seriously wrong going on over here!
+      const copyStack = [...current_stack]; // idk why it's not working when directly pushing "current_stack"
+      // console.log("current_stack", copyStack);
+      stackStates.push(copyStack);
+      // ---------------------------------------------
+
       current_state = stackTopMatch.next;
     }
 
@@ -262,8 +286,17 @@ const usePDA = (): PDAInterface => {
     };
   };
   const print = (): Array<[]> => {
-    // console.log(pda);
-    return [];
+    const transitionsArray = [];
+    for (const state in pda.transitions) {
+      for (const input in pda.transitions[state]) {
+        for (const topOfStack in pda.transitions[state][input]) {
+          const { next, stack } = pda.transitions[state][input][topOfStack];
+          transitionsArray.push([state, input, topOfStack, next, stack]);
+        }
+      }
+    }
+
+    return transitionsArray;
   };
 
   //   const generateValidStrings = async (
@@ -316,6 +349,7 @@ const usePDA = (): PDAInterface => {
 
     return JSON.stringify(pda_copy);
   };
+
   const load = (pdaString: string) => {
     const pda_copy = JSON.parse(pdaString);
     pda_copy.inputSymbols = new Set(pda_copy.inputSymbols);
@@ -323,7 +357,14 @@ const usePDA = (): PDAInterface => {
     setPda(pda_copy);
   };
   const reset = () => {
-    setPda(initialState);
+    setPda({
+      states: [],
+      finalStates: [],
+      initialState: null,
+      inputSymbols: new Set<string>(),
+      stackSymbols: new Set<string>(),
+      transitions: {},
+    });
   };
 
   return {

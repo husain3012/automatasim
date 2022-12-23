@@ -8,9 +8,7 @@ import { useRouter } from "next/router";
 import { getPostById } from "../../services/posts";
 const PDA = () => {
   const pda = usePDA();
-  useEffect(() => {
-    console.log(pda);
-  }, [pda]);
+ 
   const router = useRouter();
 
   useEffect(() => {

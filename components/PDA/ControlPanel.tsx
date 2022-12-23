@@ -69,14 +69,19 @@ const ControlPanel = ({
     const { accepted } = pda.test(input);
     setTestResult(accepted);
   };
-  const deleteStateHandler = (state: string) => {
-    pda.removeState(state);
+  const deleteTransitionHandler = (
+    from: string,
+    on: string,
+    when: string,
+    to: string,
+    then: string
+  ) => {
+    pda.removeTransition(from, on, when, to, then);
   };
 
   const simulateGraphically = async () => {
     setStackState([INITIAL_STACK_SYMBOL]);
     const { accepted, path, stackStates } = pda.test(input);
-    console.log(path, stackStates);
     let i = 0;
     for (const edge of path) {
       setActiveEdge(edge);
@@ -86,7 +91,6 @@ const ControlPanel = ({
       // else if (stackStates[i - 1].length < stackStates[i].length) playBubble();
       // else if (stackStates[i - 1].length > stackStates[i].length) playDroplet();
 
-      
       setProcessingString(input.slice(0, i));
 
       await new Promise((resolve) => setTimeout(resolve, simSpeed));
@@ -331,7 +335,7 @@ const ControlPanel = ({
               </label>
             </div>
           </div>
-          <div className="divider"></div>
+          {/* <div className="divider"></div>
 
           {pda.states.length > 0 && (
             <React.Fragment>
@@ -392,77 +396,95 @@ const ControlPanel = ({
                 Add Transition
               </button>
             </React.Fragment>
-          )}
+          )} */}
         </React.Fragment>
         <div className="divider"></div>
 
-        {/* <div className="max-w-sm md:max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
-          {pda.states.length > 0 && (
-            <table className="table ">
-              <thead>
-                <tr>
-                  <th>States</th>
-                  {transitionTable[0].slice(1).map((item, index) => {
-                    return (
-                      <th key={index} className={"text-center"}>
-                        {item}
-                      </th>
-                    );
-                  })}
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transitionTable.slice(1).map((row, index) => {
-                  return (
-                    <tr key={index}>
-                      {row.map((item, index) => {
-                        return (
-                          <td key={index} className="text-center">
-                            <span
-                              className={`rounded-full border-2 p-2 ${
-                                pda.finalStates.includes(item) && index === 0
-                                  ? "border-green-400"
-                                  : "border-transparent"
-                              } ${
-                                pda.initialState === item && index == 0
-                                  ? "font-bold text-pink-500"
-                                  : ""
-                              }`}
-                            >
-                              {item}
-                            </span>
-                          </td>
-                        );
-                      })}
-                      <td>
-                        <button
-                          onClick={() => deleteStateHandler(row[0])}
-                          className="btn btn-error btn-sm text-base-300"
+        <div className="max-w-sm md:max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
+          <h3 className="text-lg font-bold">Transitions</h3>
+          <table className="table ">
+            <thead>
+              <tr>
+                <th>From</th>
+                <th>Input</th>
+                <th>Top of Stack</th>
+                <th>To</th>
+                <th>Push</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transitionTable.map((row, index) => {
+                return (
+                  <tr key={index}>
+                    {/* from */}
+                    <td key={index} className="text-center">
+                      <span
+                        className={`rounded-full border-2 p-2 ${
+                          pda.finalStates.includes(row[0])
+                            ? "border-green-400"
+                            : "border-transparent"
+                        } ${
+                          pda.initialState === row[0]
+                            ? "font-bold text-pink-500"
+                            : ""
+                        }`}
+                      >
+                        {row[0]}
+                      </span>
+                    </td>
+                    {/* input */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[1]}</span>
+                    </td>
+                    {/* Top of Stack */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[2]}</span>
+                    </td>
+                    {/* Next state */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[3]}</span>
+                    </td>
+                    {/* stack push */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[4] ? row[4] : "ε"}</span>
+                    </td>
+                    {/* ============ */}
+                    <td>
+                      <button
+                        onClick={() =>
+                          deleteTransitionHandler(
+                            row[0],
+                            row[1],
+                            row[2],
+                            row[3],
+                            row[4]
+                          )
+                        }
+                        className="btn btn-error btn-sm text-base-300"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-4 h-4"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-4 h-4"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                          </svg>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
-        </div> */}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </React.Fragment>
     </div>
   );
