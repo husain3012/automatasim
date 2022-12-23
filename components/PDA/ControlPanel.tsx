@@ -1,6 +1,6 @@
 import React, { Dispatch, useState } from "react";
 import { PDAInterface } from "../../interfaces/pda-hook";
-import useSound from "use-sound";
+// import useSound from "use-sound";
 // import bubble from "../../public/sounds/bubble.mp3";
 // import droplet from "../../public/sounds/drop.mp3";
 import { INITIAL_STACK_SYMBOL } from "../../hooks/usePDA";
@@ -9,25 +9,19 @@ const ControlPanel = ({
   setActiveEdge,
   activeEdge,
   setStackState,
-  stackState,
+  // stackState,
 }: {
   pda: PDAInterface;
   setActiveEdge?: Dispatch<string>;
   activeEdge?: string;
   setStackState?: Dispatch<string[]>;
-  stackState: string[];
+  stackState?: string[];
 }) => {
   const [input, setInput] = useState("");
   const [testResult, setTestResult] = useState(null);
   const [simSpeed, setSimSpeed] = useState(300);
-  const [maxItr, setMaxItr] = useState(1000);
 
-  const [exampleInputs, setExampleInputs] = useState({
-    data: [],
-    found: false,
-    visible: false,
-    loading: false,
-  });
+
   const [addNewTransition, setAddNewTransition] = useState({
     source: "",
     target: "",
@@ -249,33 +243,7 @@ const ControlPanel = ({
                 </button>
               </React.Fragment>
             )} */}
-            {exampleInputs.visible && (
-              <div className="max-h-[200px]  my-2 overflow-y-auto overflow-x-auto max-w-md scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
-                <div className="mockup-code  scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200 ">
-                  {}
-                  {!exampleInputs.found && (
-                    <pre
-                      data-prefix="$"
-                      className="bg-error text-error-content"
-                    >
-                      <code>Could not find anything 😓</code>
-                    </pre>
-                  )}
-                  {exampleInputs.found && (
-                    <React.Fragment>
-                      <pre data-prefix="$" className="text-success">
-                        <code>Valid Strings...</code>
-                      </pre>
-                      {exampleInputs.data.map((str) => (
-                        <pre key={str} data-prefix="$">
-                          <code>{str}</code>
-                        </pre>
-                      ))}
-                    </React.Fragment>
-                  )}
-                </div>
-              </div>
-            )}
+          
           </div>
         </React.Fragment>
       )}

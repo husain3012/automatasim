@@ -28,7 +28,7 @@ const Canvas = ({
     show: false,
     input: "",
   });
-=
+
   useEffect(() => {
     const nodes_ = dfa.states.map((s, idx) => ({
       id: s,
