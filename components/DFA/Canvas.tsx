@@ -28,8 +28,7 @@ const Canvas = ({
     show: false,
     input: "",
   });
-  console.log(activeEdge);
-
+=
   useEffect(() => {
     const nodes_ = dfa.states.map((s, idx) => ({
       id: s,
@@ -50,7 +49,8 @@ const Canvas = ({
         width: 50,
         height: 50,
         // add a shadow to the node if it is the active node
-        boxShadow: activeEdge?.includes(">" + s) ? "0 0 15px #00FF7F" : "none",
+        boxShadow: activeEdge?.includes(">" + s) ? "0 0 10px 5px #00FF7F" : "none",
+        transition: "box-shadow 0.2s ease",
       },
       sourcePosition: Position.Right,
       targetPosition: Position.Left,

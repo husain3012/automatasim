@@ -40,7 +40,6 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
       return;
     }
     // check if all fields are filled
-    console.log(postValues);
     try {
       const resp = await postCommunityPost({
         ...postValues,
@@ -54,7 +53,6 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
       await getCommunityPostsHandler();
       setIsPostModalOpen(false);
 
-      console.log(resp);
     } catch (error) {
       console.log(error);
       toast.error("Unknown error!");
@@ -67,8 +65,8 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
     <Layout>
       <div className="container mx-auto flex my-2 justify-between items-center">
         <div className="flex flex-col gap-2">
-        <h1 className="text-4xl my-2 font-bold">Community</h1>
-        <p className="">Automatons posted by the community</p>
+          <h1 className="text-4xl my-2 font-bold">Community</h1>
+          <p className="">Automatons posted by the community</p>
         </div>
         <div className="ml-auto">
           <div
@@ -89,13 +87,10 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
       </div>
       <div className="divider"></div>
 
-       
       <div className="px-4 sm:px-24 shadow-sm m-auto flex flex-wrap gap-4 p-4 justify-center w-full">
-       
-          {communityPosts.map((post) => (
-            <ExampleCard key={post.id} example={post} />
-          ))}
-       
+        {communityPosts.map((post) => (
+          <ExampleCard key={post.id} example={post} />
+        ))}
       </div>
 
       <div className={`modal ${isPostModalOpen ? "modal-open" : ""}`}>
@@ -135,8 +130,8 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
                 >
                   <option value="">Select Type</option>
                   <option value="dfa">DFA</option>
-                  {/* <option value="pda">PDA</option>
-                  <option value="tm">Turing Machine</option> */}
+                  <option value="pda">PDA</option>
+                  {/* <option value="tm">Turing Machine</option> */}
                 </select>
               </div>
             </div>

@@ -1,15 +1,21 @@
 import React, { Dispatch, useState } from "react";
-import { DFAInterface } from "../../interfaces/dfa-hook";
-
-const MAX_SIM_DELAY = 5000
+import { PDAInterface } from "../../interfaces/pda-hook";
+import useSound from "use-sound";
+// import bubble from "../../public/sounds/bubble.mp3";
+// import droplet from "../../public/sounds/drop.mp3";
+import { INITIAL_STACK_SYMBOL } from "../../hooks/usePDA";
 const ControlPanel = ({
-  dfa,
+  pda,
   setActiveEdge,
   activeEdge,
+  setStackState,
+  stackState,
 }: {
-  dfa: DFAInterface;
+  pda: PDAInterface;
   setActiveEdge?: Dispatch<string>;
   activeEdge?: string;
+  setStackState?: Dispatch<string[]>;
+  stackState: string[];
 }) => {
   const [input, setInput] = useState("");
   const [testResult, setTestResult] = useState(null);
@@ -33,6 +39,8 @@ const ControlPanel = ({
     isInitial: false,
   });
   const [processingString, setProcessingString] = useState("");
+  // const [playBubble] = useSound(bubble, {volume:0.2});
+  // const [playDroplet] = useSound(droplet,{volume:0.2});
 
   const addStateSourceHandler = (e) => {
     setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
@@ -47,31 +55,44 @@ const ControlPanel = ({
   const addTransitionHandler = () => {
     const { source, target, input } = addNewTransition;
 
-    dfa.addTransition(source, target, input);
+    // pda.addTransition(source, target, input);
     setAddNewTransition((prev) => ({ ...prev, input: "" }));
   };
 
   const addNewStateHandler = () => {
     const { name, isFinal, isInitial } = newState;
-    dfa.addState(name, isFinal, isInitial);
+    pda.addState(name, isFinal, isInitial);
     setNewState({ name: "", isFinal: false, isInitial: false });
   };
 
   const testStringHandler = () => {
-    const { accepted } = dfa.test(input);
+    const { accepted } = pda.test(input);
     setTestResult(accepted);
   };
-  const deleteStateHandler = (state: string) => {
-    dfa.removeState(state);
+  const deleteTransitionHandler = (
+    from: string,
+    on: string,
+    when: string,
+    to: string,
+    then: string
+  ) => {
+    pda.removeTransition(from, on, when, to, then);
   };
 
   const simulateGraphically = async () => {
-    const { accepted, path } = dfa.test(input);
+    setStackState([INITIAL_STACK_SYMBOL]);
+    const { accepted, path, stackStates } = pda.test(input);
     let i = 0;
     for (const edge of path) {
       setActiveEdge(edge);
       i++;
+      setStackState(stackStates[i]);
+      // if (i === 0) playBubble();
+      // else if (stackStates[i - 1].length < stackStates[i].length) playBubble();
+      // else if (stackStates[i - 1].length > stackStates[i].length) playDroplet();
+
       setProcessingString(input.slice(0, i));
+
       await new Promise((resolve) => setTimeout(resolve, simSpeed));
     }
     if (accepted) {
@@ -80,13 +101,14 @@ const ControlPanel = ({
       setTestResult(false);
     }
     setActiveEdge(null);
+    // setStackState([INITIAL_STACK_SYMBOL]);
   };
 
-  const transitionTable = dfa.print();
+  const transitionTable = pda.print();
 
   return (
     <div className="">
-      {dfa.states.length > 0 && (
+      {pda.states.length > 0 && (
         <React.Fragment>
           <div className="flex gap-1">
             <input
@@ -110,8 +132,8 @@ const ControlPanel = ({
                   : "btn-primary"
               } min-w-[8em]`}
               disabled={
-                dfa.initialState === null ||
-                dfa.finalStates.length === 0 ||
+                pda.initialState === null ||
+                pda.finalStates.length === 0 ||
                 !!activeEdge
               }
             >
@@ -134,19 +156,19 @@ const ControlPanel = ({
           </div>
 
           <div className="flex-col my-2">
-            <div className="badge badge-sm">Sim Speed: {simSpeed} ms/step </div>
+            <div className="badge badge-sm">Sim Speed: {simSpeed} ms</div>
             <input
               type="range"
               min="0"
-              max={MAX_SIM_DELAY}
+              max="3000"
               value={simSpeed}
               onChange={(e) => setSimSpeed(parseInt(e.target.value))}
               className="range range-xs"
             />
             <button
               disabled={
-                dfa.initialState === null ||
-                dfa.finalStates.length === 0 ||
+                pda.initialState === null ||
+                pda.finalStates.length === 0 ||
                 !!activeEdge
               }
               onClick={() => {
@@ -154,7 +176,7 @@ const ControlPanel = ({
               }}
               className="btn  w-full"
             >
-              Simulate
+              Sim
             </button>
 
             {processingString.length > 0 && (
@@ -183,7 +205,7 @@ const ControlPanel = ({
               </div>
             )}
 
-            {dfa.states.length > 0 && (
+            {/* {pda.states.length > 0 && (
               <React.Fragment>
                 <div
                   className={`badge badge-sm   ${
@@ -203,11 +225,11 @@ const ControlPanel = ({
                 />
                 <button
                   disabled={
-                    dfa.initialState === null || dfa.finalStates.length === 0
+                    pda.initialState === null || pda.finalStates.length === 0
                   }
                   onClick={async () => {
                     setExampleInputs((prev) => ({ ...prev, loading: true }));
-                    const strings = await dfa.generateValidStrings(
+                    const strings = await pda.generateValidStrings(
                       100000,
                       maxItr
                     );
@@ -226,7 +248,7 @@ const ControlPanel = ({
                   {maxItr > 20000 && "(Page may freeze)"}
                 </button>
               </React.Fragment>
-            )}
+            )} */}
             {exampleInputs.visible && (
               <div className="max-h-[200px]  my-2 overflow-y-auto overflow-x-auto max-w-md scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
                 <div className="mockup-code  scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200 ">
@@ -287,7 +309,7 @@ const ControlPanel = ({
                 <input
                   type="checkbox"
                   checked={newState.isInitial}
-                  disabled={dfa.initialState !== null}
+                  disabled={pda.initialState !== null}
                   className="checkbox checkbox-primary checkbox-xs"
                   onChange={(e) =>
                     setNewState((prev) => ({
@@ -315,7 +337,7 @@ const ControlPanel = ({
           </div>
           {/* <div className="divider"></div>
 
-          {dfa.states.length > 0 && (
+          {pda.states.length > 0 && (
             <React.Fragment>
               <table className="table w-full mb-2">
                 <thead>
@@ -330,7 +352,7 @@ const ControlPanel = ({
                         <option disabled value={""}>
                           Source
                         </option>
-                        {dfa.states.map((state, index) => {
+                        {pda.states.map((state, index) => {
                           return <option key={index}>{state}</option>;
                         })}
                       </select>
@@ -354,7 +376,7 @@ const ControlPanel = ({
                         <option disabled value={""}>
                           Target
                         </option>
-                        {dfa.states.map((state, index) => {
+                        {pda.states.map((state, index) => {
                           return <option key={index}>{state}</option>;
                         })}
                       </select>
@@ -379,71 +401,89 @@ const ControlPanel = ({
         <div className="divider"></div>
 
         <div className="max-w-sm md:max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
-          {dfa.states.length > 0 && (
-            <table className="table ">
-              <thead>
-                <tr>
-                  <th>States</th>
-                  {transitionTable[0].slice(1).map((item, index) => {
-                    return (
-                      <th key={index} className={"text-center"}>
-                        {item}
-                      </th>
-                    );
-                  })}
-                  <th>Delete</th>
-                </tr>
-              </thead>
-              <tbody>
-                {transitionTable.slice(1).map((row, index) => {
-                  return (
-                    <tr key={index}>
-                      {row.map((item, index) => {
-                        return (
-                          <td key={index} className="text-center">
-                            <span
-                              className={`rounded-full border-2 p-2 ${
-                                dfa.finalStates.includes(item) && index === 0
-                                  ? "border-green-400"
-                                  : "border-transparent"
-                              } ${
-                                dfa.initialState === item && index == 0
-                                  ? "font-bold text-pink-500"
-                                  : ""
-                              }`}
-                            >
-                              {item}
-                            </span>
-                          </td>
-                        );
-                      })}
-                      <td>
-                        <button
-                          onClick={() => deleteStateHandler(row[0])}
-                          className="btn btn-error btn-sm text-base-300"
+          <h3 className="text-lg font-bold">Transitions</h3>
+          <table className="table ">
+            <thead>
+              <tr>
+                <th>From</th>
+                <th>Input</th>
+                <th>Top of Stack</th>
+                <th>To</th>
+                <th>Push</th>
+                <th>Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transitionTable.map((row, index) => {
+                return (
+                  <tr key={index}>
+                    {/* from */}
+                    <td key={index} className="text-center">
+                      <span
+                        className={`rounded-full border-2 p-2 ${
+                          pda.finalStates.includes(row[0])
+                            ? "border-green-400"
+                            : "border-transparent"
+                        } ${
+                          pda.initialState === row[0]
+                            ? "font-bold text-pink-500"
+                            : ""
+                        }`}
+                      >
+                        {row[0]}
+                      </span>
+                    </td>
+                    {/* input */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[1]}</span>
+                    </td>
+                    {/* Top of Stack */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[2]}</span>
+                    </td>
+                    {/* Next state */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[3]}</span>
+                    </td>
+                    {/* stack push */}
+                    <td key={index} className="text-center">
+                      <span className={` `}>{row[4] ? row[4] : "ε"}</span>
+                    </td>
+                    {/* ============ */}
+                    <td>
+                      <button
+                        onClick={() =>
+                          deleteTransitionHandler(
+                            row[0],
+                            row[1],
+                            row[2],
+                            row[3],
+                            row[4]
+                          )
+                        }
+                        className="btn btn-error btn-sm text-base-300"
+                      >
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          strokeWidth={1.5}
+                          stroke="currentColor"
+                          className="w-4 h-4"
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            fill="none"
-                            viewBox="0 0 24 24"
-                            strokeWidth={1.5}
-                            stroke="currentColor"
-                            className="w-4 h-4"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
-                            />
-                          </svg>
-                        </button>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          )}
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0"
+                          />
+                        </svg>
+                      </button>
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </React.Fragment>
     </div>

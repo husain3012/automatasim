@@ -39,19 +39,19 @@ const ExampleCard = ({ example }: { example: ExampleInterface }) => {
           ))}
       </div>
       <div className="card-body">
-        <div className="badge badge-accent badge-outline">{example.type}</div>
+        <div className="badge badge-accent badge-outline ">{example.type}</div>
         <h2 className="card-title">{example.name}</h2>
 
         <p>{example.description}</p>
         {example.author && (
-          <div className="flex flex-row justify-end">
+          <div className="flex flex-row justify-end items-center border-2 border-accent rounded-full p-2 w-fit ml-auto">
             <div className="avatar">
-              <div className="w-8 rounded-full">
+              <div className="w-6 rounded-full">
                 <img src={example.author.avatar} referrerPolicy="no-referrer" />
               </div>
             </div>
             <div className="ml-2">
-              <p className="text-base font-bold">
+              <p className="text-base font-semibold">
                 {example.author.name.split(" ")[0]}
               </p>
             </div>
@@ -68,7 +68,7 @@ const ExampleCard = ({ example }: { example: ExampleInterface }) => {
             {copiedToClipboard ? "Copied!" : "Copy"}
           </button>
           <Link
-            href={`/dfa?load=${example.id}`}
+            href={`/${example.type}?load=${example.id}`}
             className="btn btn-outline btn-primary"
           >
             Load in Editor
