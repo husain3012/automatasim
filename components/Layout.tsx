@@ -6,7 +6,6 @@ import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from "react-icons/ai";
 import { toast, Toaster } from "react-hot-toast";
 import Router from "next/router";
 import AuthWrapper from "./AuthWrapper";
-import { BounceLoader } from "react-spinners";
 import { useRecoilValue } from "recoil";
 import { loadingAtom } from "../atom/loadingAtom";
 interface Props {
