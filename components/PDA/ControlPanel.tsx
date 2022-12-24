@@ -22,11 +22,11 @@ const ControlPanel = ({
   const [simSpeed, setSimSpeed] = useState(300);
 
 
-  const [addNewTransition, setAddNewTransition] = useState({
-    source: "",
-    target: "",
-    input: "",
-  });
+  // const [addNewTransition, setAddNewTransition] = useState({
+  //   source: "",
+  //   target: "",
+  //   input: "",
+  // });
   const [newState, setNewState] = useState({
     name: "",
     isFinal: false,
@@ -36,22 +36,22 @@ const ControlPanel = ({
   // const [playBubble] = useSound(bubble, {volume:0.2});
   // const [playDroplet] = useSound(droplet,{volume:0.2});
 
-  const addStateSourceHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
-  };
-  const addStateTargetHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
-  };
-  const addStateInputHandler = (e) => {
-    if (e.target.value.length > 1) return;
-    setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
-  };
-  const addTransitionHandler = () => {
-    const { source, target, input } = addNewTransition;
+  // const addStateSourceHandler = (e) => {
+  //   setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
+  // };
+  // const addStateTargetHandler = (e) => {
+  //   setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
+  // };
+  // const addStateInputHandler = (e) => {
+  //   if (e.target.value.length > 1) return;
+  //   setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
+  // };
+  // const addTransitionHandler = () => {
+  //   const { source, target, input } = addNewTransition;
 
-    // pda.addTransition(source, target, input);
-    setAddNewTransition((prev) => ({ ...prev, input: "" }));
-  };
+  //   // pda.addTransition(source, target, input);
+  //   setAddNewTransition((prev) => ({ ...prev, input: "" }));
+  // };
 
   const addNewStateHandler = () => {
     const { name, isFinal, isInitial } = newState;

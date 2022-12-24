@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { PDAInterface } from "../interfaces/pda-hook";
 
 export const INITIAL_STACK_SYMBOL = "#";
@@ -31,22 +31,6 @@ const initialState: {
   stackSymbols: new Set(INITIAL_STACK_SYMBOL),
   transitions: {},
   // stack: [INITIAL_STACK_SYMBOL],
-};
-
-const transition = {
-  q0: {
-    a: {
-      Z: {
-        next: "q0",
-        stack: "z",
-      },
-      a: {
-        next: "q0",
-        stack: "fafdsfdsfg",
-      },
-    },
-    b: {},
-  },
 };
 
 // δ( q0, a, Z ) = { ( q0, AZ ) }

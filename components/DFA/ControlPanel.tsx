@@ -20,11 +20,11 @@ const ControlPanel = ({
     visible: false,
     loading: false,
   });
-  const [addNewTransition, setAddNewTransition] = useState({
-    source: "",
-    target: "",
-    input: "",
-  });
+  // const [addNewTransition, setAddNewTransition] = useState({
+  //   source: "",
+  //   target: "",
+  //   input: "",
+  // });
   const [newState, setNewState] = useState({
     name: "",
     isFinal: false,
@@ -32,22 +32,22 @@ const ControlPanel = ({
   });
   const [processingString, setProcessingString] = useState("");
 
-  const addStateSourceHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
-  };
-  const addStateTargetHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
-  };
-  const addStateInputHandler = (e) => {
-    if (e.target.value.length > 1) return;
-    setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
-  };
-  const addTransitionHandler = () => {
-    const { source, target, input } = addNewTransition;
+  // const addStateSourceHandler = (e) => {
+  //   setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
+  // };
+  // const addStateTargetHandler = (e) => {
+  //   setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
+  // };
+  // const addStateInputHandler = (e) => {
+  //   if (e.target.value.length > 1) return;
+  //   setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
+  // };
+  // const addTransitionHandler = () => {
+  //   const { source, target, input } = addNewTransition;
 
-    dfa.addTransition(source, target, input);
-    setAddNewTransition((prev) => ({ ...prev, input: "" }));
-  };
+  //   dfa.addTransition(source, target, input);
+  //   setAddNewTransition((prev) => ({ ...prev, input: "" }));
+  // };
 
   const addNewStateHandler = () => {
     const { name, isFinal, isInitial } = newState;
