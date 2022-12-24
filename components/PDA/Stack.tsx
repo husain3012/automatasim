@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import useSound from "use-sound";
+import React from "react";
 
 const Stack = ({
   stack,
@@ -10,8 +9,11 @@ const Stack = ({
 }) => {
   let stackGapMultiplier = 20;
   // if stack height is greater than window height, decrease gap multiplier to fit in window
-  if (stack.length * stackGapMultiplier > window.innerHeight / 1.5) {
-    stackGapMultiplier = window.innerHeight /1.5 / stack.length + 0.5;
+  if (
+    typeof window !== "undefined" &&
+    stack.length * stackGapMultiplier > window.innerHeight / 1.5
+  ) {
+    stackGapMultiplier = window.innerHeight / 1.5 / stack.length + 0.5;
   }
 
   return (

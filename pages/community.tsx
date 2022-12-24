@@ -6,7 +6,6 @@ import { ExampleInterface } from "../interfaces/example";
 import { getCommunityPosts, postCommunityPost } from "../services/posts";
 import { useRecoilValue } from "recoil";
 import { authState } from "../atom/authAtom";
-import dayjs from "dayjs";
 
 const Community = ({ posts }: { posts: ExampleInterface[] }) => {
   const [communityPosts, setCommunityPosts] = useState(posts);
@@ -41,7 +40,7 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
     }
     // check if all fields are filled
     try {
-      const resp = await postCommunityPost({
+      await postCommunityPost({
         ...postValues,
         author: {
           id: auth.uid,

@@ -1,5 +1,5 @@
-import Link from 'next/link'
-import Layout from '../components/Layout'
+import Link from "next/link";
+import Layout from "../components/Layout";
 
 const IndexPage = () => (
   <Layout title="Automata">
@@ -9,22 +9,19 @@ const IndexPage = () => (
           alt="AutomataSim"
           src="/images/automatasim.png"
           className="max-w-sm w-60 md:w-auto rounded-lg shadow-2xl"
-
         />
         <div>
           <h1 className="text-5xl font-bold">Simulator for automatons</h1>
           <div className="py-6">
             This web application is a simulator for automatons. You can build
-            and simulate{' '}
+            and simulate{" "}
             <Link className="underline" href="/dfa">
               Definite Finite Automata
             </Link>
             , &nbsp;
-            <span className="tooltip" data-tip="Coming Soon">
-              <Link className="underline" href="/">
-                Push Down Automates
-              </Link>
-            </span>
+            <Link className="underline" href="/pda">
+              Push Down Automates
+            </Link>
             &nbsp; and &nbsp;
             <span className="tooltip" data-tip="Coming Soon">
               <Link className="underline" href="/">
@@ -79,6 +76,6 @@ const IndexPage = () => (
       ></iframe>
     </div>
   </Layout>
-)
+);
 
-export default IndexPage
+export default IndexPage;

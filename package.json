@@ -23,12 +23,14 @@
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.0",
     "react-icons": "^4.7.1",
+    "react-spinners": "^0.13.7",
     "reactflow": "^11.3.3",
     "recoil": "^0.7.6",
     "tailwind-scrollbar": "^2.0.1",
     "use-sound": "^4.0.1"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.1.1",
     "@types/node": "^12.12.21",
     "@types/react": "^17.0.2",
     "@types/react-dom": "^17.0.1",

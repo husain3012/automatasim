@@ -1,6 +1,6 @@
 import React, { Dispatch, useState } from "react";
 import { PDAInterface } from "../../interfaces/pda-hook";
-import useSound from "use-sound";
+// import useSound from "use-sound";
 // import bubble from "../../public/sounds/bubble.mp3";
 // import droplet from "../../public/sounds/drop.mp3";
 import { INITIAL_STACK_SYMBOL } from "../../hooks/usePDA";
@@ -9,30 +9,24 @@ const ControlPanel = ({
   setActiveEdge,
   activeEdge,
   setStackState,
-  stackState,
+  // stackState,
 }: {
   pda: PDAInterface;
   setActiveEdge?: Dispatch<string>;
   activeEdge?: string;
   setStackState?: Dispatch<string[]>;
-  stackState: string[];
+  stackState?: string[];
 }) => {
   const [input, setInput] = useState("");
   const [testResult, setTestResult] = useState(null);
   const [simSpeed, setSimSpeed] = useState(300);
-  const [maxItr, setMaxItr] = useState(1000);
 
-  const [exampleInputs, setExampleInputs] = useState({
-    data: [],
-    found: false,
-    visible: false,
-    loading: false,
-  });
-  const [addNewTransition, setAddNewTransition] = useState({
-    source: "",
-    target: "",
-    input: "",
-  });
+
+  // const [addNewTransition, setAddNewTransition] = useState({
+  //   source: "",
+  //   target: "",
+  //   input: "",
+  // });
   const [newState, setNewState] = useState({
     name: "",
     isFinal: false,
@@ -42,22 +36,22 @@ const ControlPanel = ({
   // const [playBubble] = useSound(bubble, {volume:0.2});
   // const [playDroplet] = useSound(droplet,{volume:0.2});
 
-  const addStateSourceHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
-  };
-  const addStateTargetHandler = (e) => {
-    setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
-  };
-  const addStateInputHandler = (e) => {
-    if (e.target.value.length > 1) return;
-    setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
-  };
-  const addTransitionHandler = () => {
-    const { source, target, input } = addNewTransition;
+  // const addStateSourceHandler = (e) => {
+  //   setAddNewTransition((prev) => ({ ...prev, source: e.target.value }));
+  // };
+  // const addStateTargetHandler = (e) => {
+  //   setAddNewTransition((prev) => ({ ...prev, target: e.target.value }));
+  // };
+  // const addStateInputHandler = (e) => {
+  //   if (e.target.value.length > 1) return;
+  //   setAddNewTransition((prev) => ({ ...prev, input: e.target.value }));
+  // };
+  // const addTransitionHandler = () => {
+  //   const { source, target, input } = addNewTransition;
 
-    // pda.addTransition(source, target, input);
-    setAddNewTransition((prev) => ({ ...prev, input: "" }));
-  };
+  //   // pda.addTransition(source, target, input);
+  //   setAddNewTransition((prev) => ({ ...prev, input: "" }));
+  // };
 
   const addNewStateHandler = () => {
     const { name, isFinal, isInitial } = newState;
@@ -249,33 +243,7 @@ const ControlPanel = ({
                 </button>
               </React.Fragment>
             )} */}
-            {exampleInputs.visible && (
-              <div className="max-h-[200px]  my-2 overflow-y-auto overflow-x-auto max-w-md scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
-                <div className="mockup-code  scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200 ">
-                  {}
-                  {!exampleInputs.found && (
-                    <pre
-                      data-prefix="$"
-                      className="bg-error text-error-content"
-                    >
-                      <code>Could not find anything 😓</code>
-                    </pre>
-                  )}
-                  {exampleInputs.found && (
-                    <React.Fragment>
-                      <pre data-prefix="$" className="text-success">
-                        <code>Valid Strings...</code>
-                      </pre>
-                      {exampleInputs.data.map((str) => (
-                        <pre key={str} data-prefix="$">
-                          <code>{str}</code>
-                        </pre>
-                      ))}
-                    </React.Fragment>
-                  )}
-                </div>
-              </div>
-            )}
+          
           </div>
         </React.Fragment>
       )}

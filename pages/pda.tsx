@@ -5,7 +5,7 @@ import PDA from "../components/PDA/PDA";
 
 const Pda = () => {
   return (
-    <Layout title="Automata | DFA">
+    <Layout title="Automata | PDA">
       <PDA  />
     </Layout>
   );

@@ -2,8 +2,10 @@ import Link from "next/link";
 import React from "react";
 import { toast } from "react-hot-toast";
 import { AiOutlineGoogle, AiOutlineMenu } from "react-icons/ai";
+import { ClipLoader, FadeLoader, MoonLoader } from "react-spinners";
 import { useRecoilValue } from "recoil";
 import { authState } from "../../atom/authAtom";
+import { loadingAtom } from "../../atom/loadingAtom";
 import { logIn, logOut } from "../../firebase/auth";
 
 const NAV_LINKS: { name: string; path: string }[] = [
@@ -11,7 +13,7 @@ const NAV_LINKS: { name: string; path: string }[] = [
   //   name: "Examples",
   //   path: "/examples",
   // },
- 
+
   {
     name: "DFA",
     path: "/dfa",
@@ -32,6 +34,7 @@ const NAV_LINKS: { name: string; path: string }[] = [
 
 const Navbar = () => {
   const user = useRecoilValue(authState);
+  const loadingState = useRecoilValue(loadingAtom);
   const logoutHandler = async () => {
     const resp = await logOut();
     if (resp) {
@@ -71,7 +74,7 @@ const Navbar = () => {
           <AiOutlineMenu />
         </label>
         <ul className="dropdown-content menu p-2 shadow bg-base-200 rounded-box w-52">
-        {NAV_LINKS.map((link) => (
+          {NAV_LINKS.map((link) => (
             <li key={link.path}>
               <Link href={link.path}>{link.name}</Link>
             </li>
@@ -80,11 +83,17 @@ const Navbar = () => {
       </div>
       {/* mobile view ends */}
 
-      {user ? (
-        <div className="dropdown dropdown-end mx-2">
+      {loadingState.auth ? (
+        <MoonLoader className="mx-2" size={32} color="hsl(var(--s))" loading />
+      ) : user ? (
+        <div className="dropdown dropdown-end mx-2 ">
           <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
             <div className="w-10 rounded-full">
-              <img src={user.photoURL} alt={user.displayName} referrerPolicy="no-referrer" />
+              <img
+                src={user.photoURL}
+                alt={user.displayName}
+                referrerPolicy="no-referrer"
+              />
             </div>
           </label>
           <ul

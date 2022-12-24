@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { DFAInterface } from "../interfaces/dfa-hook";
 
 const initialState: {
