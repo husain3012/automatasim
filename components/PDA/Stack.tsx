@@ -35,7 +35,7 @@ const Stack = ({
             marginTop: 0 - idx * stackGapMultiplier + "px",
             zIndex: idx,
           }}
-          className={`skew-x-12 shadow-xl absolute grid w-16 h-12 border-b-2 rounded border-base-100 text-primary-content place-content-center bg-primary `}
+          className={`skew-x-6 shadow-xl absolute grid w-16 h-12 border-b-2 rounded border-base-100 text-primary-content place-content-center bg-primary cursor-pointer hover:translate-y-8 hover:translate-x-2 hover:skew-x-12 transition-all hover:bg-primary-focus `}
         >
           <div className="card-body">{el}</div>
         </div>
