@@ -15,13 +15,13 @@ module.exports = {
     ecmaVersion: "latest",
     sourceType: "module",
   },
-  plugins: ["react", "@typescript-eslint"],
+  plugins: ["react", "@typescript-eslint", "@next/eslint-plugin-next"],
   rules: {
     "react/react-in-jsx-scope": "off",
   },
-  settings:{
+  settings: {
     react: {
-        version: "detect",
+      version: "detect",
     },
-  }
+  },
 };
