@@ -102,6 +102,123 @@ const ControlPanel = ({
 
   return (
     <div className="">
+           <React.Fragment>
+          <div className=" flex flex-col">
+            <div className="flex gap-2">
+              <input
+                type="text"
+                placeholder="State"
+                className="input input-bordered w-20 input-accent"
+                value={newState.name}
+                onChange={(e) =>
+                  setNewState((prev) => ({ ...prev, name: e.target.value }))
+                }
+              />{" "}
+              <button
+                onClick={addNewStateHandler}
+                className="btn btn-success"
+                disabled={newState.name.length === 0}
+              >
+                Add New State
+              </button>
+            </div>
+            <div className="flex flex-row gap-2">
+              <label className="label cursor-pointer">
+                <span className="label-text mr-2">Initial</span>
+                <input
+                  type="checkbox"
+                  checked={newState.isInitial}
+                  disabled={pda.initialState !== null}
+                  className="checkbox checkbox-primary checkbox-xs"
+                  onChange={(e) =>
+                    setNewState((prev) => ({
+                      ...prev,
+                      isInitial: e.target.checked,
+                    }))
+                  }
+                />
+              </label>
+              <label className="label cursor-pointer">
+                <span className="label-text mr-2">Final</span>
+                <input
+                  type="checkbox"
+                  checked={newState.isFinal}
+                  className="checkbox checkbox-primary checkbox-xs"
+                  onChange={(e) =>
+                    setNewState((prev) => ({
+                      ...prev,
+                      isFinal: e.target.checked,
+                    }))
+                  }
+                />
+              </label>
+            </div>
+          </div>
+          {/* <div className="divider"></div>
+
+          {pda.states.length > 0 && (
+            <React.Fragment>
+              <table className="table w-full mb-2">
+                <thead>
+                  <tr>
+                    <th>
+                      <select
+                        value={addNewTransition.source}
+                        onChange={addStateSourceHandler}
+                        className="select select-sm"
+                        defaultValue={""}
+                      >
+                        <option disabled value={""}>
+                          Source
+                        </option>
+                        {pda.states.map((state, index) => {
+                          return <option key={index}>{state}</option>;
+                        })}
+                      </select>
+                    </th>
+                    <th>
+                      <input
+                        type="text"
+                        placeholder="Input"
+                        className="input input-sm w-28"
+                        value={addNewTransition.input}
+                        onChange={addStateInputHandler}
+                      />
+                    </th>
+                    <th>
+                      <select
+                        value={addNewTransition.target}
+                        onChange={addStateTargetHandler}
+                        className="select select-sm"
+                        defaultValue={""}
+                      >
+                        <option disabled value={""}>
+                          Target
+                        </option>
+                        {pda.states.map((state, index) => {
+                          return <option key={index}>{state}</option>;
+                        })}
+                      </select>
+                    </th>
+                  </tr>
+                </thead>
+              </table>
+              <button
+                disabled={
+                  addNewTransition.source === "" ||
+                  addNewTransition.target === "" ||
+                  addNewTransition.input === ""
+                }
+                onClick={addTransitionHandler}
+                className="btn  w-full"
+              >
+                Add Transition
+              </button>
+            </React.Fragment>
+          )} */}
+        </React.Fragment>
+        <div className="divider"></div>
+
       {pda.states.length > 0 && (
         <React.Fragment>
           <div className="flex gap-1">
@@ -251,123 +368,7 @@ const ControlPanel = ({
       <div className="divider"></div>
 
       <React.Fragment>
-        <React.Fragment>
-          <div className=" flex flex-col">
-            <div className="flex gap-2">
-              <input
-                type="text"
-                placeholder="State"
-                className="input input-bordered w-20 input-accent"
-                value={newState.name}
-                onChange={(e) =>
-                  setNewState((prev) => ({ ...prev, name: e.target.value }))
-                }
-              />{" "}
-              <button
-                onClick={addNewStateHandler}
-                className="btn btn-success"
-                disabled={newState.name.length === 0}
-              >
-                Add New State
-              </button>
-            </div>
-            <div className="flex flex-row gap-2">
-              <label className="label cursor-pointer">
-                <span className="label-text mr-2">Initial</span>
-                <input
-                  type="checkbox"
-                  checked={newState.isInitial}
-                  disabled={pda.initialState !== null}
-                  className="checkbox checkbox-primary checkbox-xs"
-                  onChange={(e) =>
-                    setNewState((prev) => ({
-                      ...prev,
-                      isInitial: e.target.checked,
-                    }))
-                  }
-                />
-              </label>
-              <label className="label cursor-pointer">
-                <span className="label-text mr-2">Final</span>
-                <input
-                  type="checkbox"
-                  checked={newState.isFinal}
-                  className="checkbox checkbox-primary checkbox-xs"
-                  onChange={(e) =>
-                    setNewState((prev) => ({
-                      ...prev,
-                      isFinal: e.target.checked,
-                    }))
-                  }
-                />
-              </label>
-            </div>
-          </div>
-          {/* <div className="divider"></div>
-
-          {pda.states.length > 0 && (
-            <React.Fragment>
-              <table className="table w-full mb-2">
-                <thead>
-                  <tr>
-                    <th>
-                      <select
-                        value={addNewTransition.source}
-                        onChange={addStateSourceHandler}
-                        className="select select-sm"
-                        defaultValue={""}
-                      >
-                        <option disabled value={""}>
-                          Source
-                        </option>
-                        {pda.states.map((state, index) => {
-                          return <option key={index}>{state}</option>;
-                        })}
-                      </select>
-                    </th>
-                    <th>
-                      <input
-                        type="text"
-                        placeholder="Input"
-                        className="input input-sm w-28"
-                        value={addNewTransition.input}
-                        onChange={addStateInputHandler}
-                      />
-                    </th>
-                    <th>
-                      <select
-                        value={addNewTransition.target}
-                        onChange={addStateTargetHandler}
-                        className="select select-sm"
-                        defaultValue={""}
-                      >
-                        <option disabled value={""}>
-                          Target
-                        </option>
-                        {pda.states.map((state, index) => {
-                          return <option key={index}>{state}</option>;
-                        })}
-                      </select>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-              <button
-                disabled={
-                  addNewTransition.source === "" ||
-                  addNewTransition.target === "" ||
-                  addNewTransition.input === ""
-                }
-                onClick={addTransitionHandler}
-                className="btn  w-full"
-              >
-                Add Transition
-              </button>
-            </React.Fragment>
-          )} */}
-        </React.Fragment>
-        <div className="divider"></div>
-
+   
         <div className="max-w-sm md:max-w-md overflow-x-auto scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-200">
           <h3 className="text-lg font-bold">Transitions</h3>
           <table className="table ">
