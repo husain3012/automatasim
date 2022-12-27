@@ -35,7 +35,7 @@ const Layout = ({ children, title = "Automata" }: Props) => {
   return (
     <React.Fragment>
       <progress
-        className={`progress progress-primary   bg-transparent  w-screen fixed transition-all ${
+        className={`progress progress-primary z-10  bg-transparent  w-screen fixed transition-all ${
           isLoading ? " opacity-70" : " opacity-0"
         }`}
       ></progress>

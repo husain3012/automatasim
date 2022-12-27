@@ -69,7 +69,7 @@ const IndexPage = () => (
 
       <iframe
         className="w-4/5 sm:w-full sm:h-96 m-4"
-        src="https://www.youtube.com/embed/O04a2a7dwb4"
+        src="https://www.youtube.com/embed/0BhxUC31pqs"
         title="DFA tutorial for AutomataSim"
         allowFullScreen={true}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
