@@ -6,15 +6,13 @@ import { AiFillGithub, AiFillLinkedin, AiFillInstagram } from "react-icons/ai";
 import { toast, Toaster } from "react-hot-toast";
 import Router from "next/router";
 import AuthWrapper from "./AuthWrapper";
-import { useRecoilValue } from "recoil";
-import { loadingAtom } from "../atom/loadingAtom";
+
 interface Props {
   children?: ReactNode;
   title?: string;
 }
 
 const Layout = ({ children, title = "Automata" }: Props) => {
-  const loadingState = useRecoilValue(loadingAtom);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -49,6 +47,24 @@ const Layout = ({ children, title = "Automata" }: Props) => {
               name="viewport"
               content="initial-scale=1.0, width=device-width"
             />
+            <link
+              rel="apple-touch-icon"
+              sizes="180x180"
+              href="/apple-touch-icon.png"
+            />
+            <link
+              rel="icon"
+              type="image/png"
+              sizes="32x32"
+              href="/favicon-32x32.png"
+            />
+            <link
+              rel="icon"
+              type="image/png"
+              sizes="16x16"
+              href="/favicon-16x16.png"
+            />
+            <link rel="manifest" href="/site.webmanifest" />
           </Head>
 
           <header>
