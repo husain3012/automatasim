@@ -47,7 +47,7 @@ const Layout = ({ children, title = "Automata" }: Props) => {
               name="viewport"
               content="initial-scale=1.0, width=device-width"
             />
-            <meta name="title" content={title}/>
+            <meta name="title" content={title} />
             <meta
               name="description"
               content="Build, simulate, and share automatons like DFA, PDA, and Turing Machines on our website. Our user-friendly interface makes it easy for students and professionals alike to learn and experiment with these powerful tools for formal language theory."
@@ -88,11 +88,15 @@ const Layout = ({ children, title = "Automata" }: Props) => {
               <Link href="/#about" className="link link-hover">
                 About
               </Link>
+
               <Link
                 href="mailto:husainshahidrao@gmail.com"
                 className="link link-hover"
               >
                 Contact
+              </Link>
+              <Link href="/tac" className="link link-hover">
+                Terms & Conditions
               </Link>
             </div>
             <div>
