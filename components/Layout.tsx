@@ -47,6 +47,17 @@ const Layout = ({ children, title = "Automata" }: Props) => {
               name="viewport"
               content="initial-scale=1.0, width=device-width"
             />
+            <meta name="title" content={title}/>
+            <meta
+              name="description"
+              content="Build, simulate, and share automatons like DFA, PDA, and Turing Machines on our website. Our user-friendly interface makes it easy for students and professionals alike to learn and experiment with these powerful tools for formal language theory."
+            />
+            <meta
+              name="keywords"
+              content="automatons, DFA, PDA, Turing Machines, formal language theory, simulation, computer science, education, programming, software"
+            />
+            <meta name="robots" content="index, follow" />
+
             <link
               rel="apple-touch-icon"
               sizes="180x180"
