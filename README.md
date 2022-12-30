@@ -1,6 +1,6 @@
 # AutomataSim
 
-![screenshot](https://automatasim.vercel.app/images/automatasim.png)
+![screenshot](https://automatasim.husainshahidrao.com/images/automatasim.png)
 
 ## Description
 
@@ -17,7 +17,7 @@ A webapp aimed to build, simulate and share their Definite Finite Automatons, Pu
 
 ## Try it your own
 
-The project is live [here](https://automatasim.vercel.app/).
+The project is live [here](https://automatasim.husainshahidrao.com/).
 
 ## Build locally
 
