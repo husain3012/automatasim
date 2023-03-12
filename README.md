@@ -1,38 +1,47 @@
 # AutomataSim
 
-![screenshot](https://automatasim.husainshahidrao.com/images/automatasim.png)
+AutomataSim is a web application that allows users to build, simulate, and share Definite Finite Automatons (DFA), Push Down Automatons (PDA), and Turing Machines. It is built using the Next.js framework, React library, TailwindCSS, Firebase, TypeScript, and deployed on Vercel.
 
-## Description
+![AutomataSim Screenshot](https://automatasim.husainshahidrao.com/images/automatasim.png)
 
-A webapp aimed to build, simulate and share their Definite Finite Automatons, Push Down Automatons, and Turing Machines.
+## Features
 
-### Tech stack:
+- Build and simulate DFAs, PDAs, and Turing Machines.
+- Save and load automatons.
+- Share automatons with others.
+- Check whether a given string is accepted by the automaton or not.
+- View transition tables and diagrams.
 
-- [Next.js](https://nextjs.org/) - React framework
-- [React](https://reactjs.org/) - Frontend library
-- [TailwindCSS](https://tailwindcss.com/) - CSS framework
-- [Firebase](https://firebase.google.com/) - Backend
-- [TypeScript](https://www.typescriptlang.org/) - Type checker
-- [Vercel](https://vercel.com/) - Deployment
+## Getting Started
 
-## Try it your own
+### Prerequisites
 
-The project is live [here](https://automatasim.husainshahidrao.com/).
+- Node.js (v16 or later)
+- Yarn (v1.22.10 or later)
 
-## Build locally
+### Installation
 
-1. Add your firebase config as shown in `env.example` file.
-2. Run `yarn` to install all the dependencies.
-3. Run `yarn dev` to start the development server at port 3000.
+1. Clone the repository.
+2. Install dependencies with `yarn`.
+3. Add your Firebase configuration in a `.env.local` file. An example is given in `.env.example`.
+4. Run the development server with `yarn dev`.
 
-```bash
+```sh
+git clone https://github.com/husain3012/automatasim.git
+cd automatasim
 yarn
-```
-
-```bash
+cp .env.example .env.local # replace with your own Firebase config
 yarn dev
 ```
+The development server will start at ```http://localhost:3000```
 
-## Contributing
+### Deployment
+AutomataSim is currently deployed at automatasim.husainshahidrao.com. You can deploy it on your own Vercel account by clicking the button below:
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+[![Deploy on Vercel](https://vercel.com/button)](https://vercel.com/import/project?template=https://github.com/%3Chusain3012%3E/automatasim)
+
+### Contributing
+Contributions are welcome! Please create an issue first to discuss the proposed changes. Before submitting a pull request, make sure to run ```yarn lint``` and ```yarn test``` to ensure that there are no linting or testing errors.
+
+### License
+AutomataSim is licensed under the <strong>MIT License</strong>.
