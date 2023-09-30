@@ -23,13 +23,14 @@ const NAV_LINKS: { name: string; path: string }[] = [
     path: "/pda",
   },
   {
+    name: "Turing Machine",
+    path: "/tm",
+  },
+  {
     name: "Community Posts",
     path: "/community",
   },
-  // {
-  //   name: "Turing Machine",
-  //   path: "/tm",
-  // },
+ 
 ];
 
 const Navbar = () => {

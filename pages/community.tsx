@@ -130,7 +130,7 @@ const Community = ({ posts }: { posts: ExampleInterface[] }) => {
                   <option value="">Select Type</option>
                   <option value="dfa">DFA</option>
                   <option value="pda">PDA</option>
-                  {/* <option value="tm">Turing Machine</option> */}
+                  <option value="tm">Turing Machine</option>
                 </select>
               </div>
             </div>
