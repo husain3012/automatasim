@@ -1,7 +1,11 @@
 import { useState } from "react";
 import { TMInterface } from "../interfaces/tm-hook";
+import toast from "react-hot-toast";
 
 export const BLANK_SYMBOL = "#";
+
+export const HALTING_LIMIT = 100000
+
 
 const initialState: {
   states: string[];
@@ -168,15 +172,20 @@ const useTM = (): TMInterface => {
   ) => {
     let pointer = 0;
     const path = [];
-  
-    const tapeHistory = [{ pointer: pointer, tape: Array.from(input)}];
+
+    const tapeHistory = [{ pointer: pointer, tape: Array.from(input) }];
 
     let current_state = tm.initialState;
 
-
+    let iterations = 0;
 
 
     while (!tm.finalStates.includes(current_state)) {
+      iterations++;
+      if (iterations > HALTING_LIMIT) {
+        toast.error('Halting Limit reached')
+        break;
+      };
       const currentTape = [...tapeHistory[tapeHistory.length - 1].tape]
       const char = currentTape[pointer];
 
@@ -202,7 +211,7 @@ const useTM = (): TMInterface => {
 
 
       path.push(current_state + ">" + inputMatch.next);
-      tapeHistory.push({pointer, tape: currentTape})
+      tapeHistory.push({ pointer, tape: currentTape })
 
 
       current_state = inputMatch.next
