@@ -185,7 +185,7 @@ const useTM = (): TMInterface => {
       if (iterations > HALTING_LIMIT) {
         toast.error('Halting Limit reached')
         break;
-      };
+      }
       const currentTape = [...tapeHistory[tapeHistory.length - 1].tape]
       const char = currentTape[pointer];
 

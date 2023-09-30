@@ -23,11 +23,10 @@ const IndexPage = () => (
               Push Down Automates
             </Link>
             &nbsp; and &nbsp;
-            <span className="tooltip" data-tip="Coming Soon">
-              <Link className="underline" href="/">
+              <Link className="underline" href="/tm">
                 Turing Machines.
               </Link>
-            </span>
+       
           </div>
           <div className="flex gap-2">
             <Link href="/examples" className="btn btn-primary">
