@@ -8,11 +8,7 @@ const Tape = ({
   className?: string;
 }) => {
   const [autoScrollOn, setAutoScrollOn] = useState(false);
-  const pointerDiv = useRef<HTMLDivElement | null>(null);
-  // if stack height is greater than window height, decrease gap multiplier to fit in window
-  useEffect(() => {
-    pointerDiv.current.scrollIntoView();
-  }, [pointerDiv]);
+
   return (
     <div className="absolute  border-2 border-accent-focus  mt-2 rounded-md bg-base-200 h-20 px-4 flex flex-col items-center justify-start  scrollbar-thin scrollbar-thumb-base-300 scrollbar-track-base-20 z-20">
       <div className="text-lg flex items-center text-base-content  tracking-wider">
@@ -25,7 +21,6 @@ const Tape = ({
         />
       </div>
       <div
-        ref={pointerDiv}
         className={` flex justify-start   h-full w-full overflow-x-auto max-w-sm sm:max-w-sm lg:max-w-2xl px-6  ${className}`}
       >
         {tape.tape.map((el, idx) => (
